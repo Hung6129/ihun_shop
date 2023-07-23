@@ -49,19 +49,12 @@ class HomeWidget extends StatelessWidget {
                                 context,
                                 MaterialPageRoute(
                                   builder: (context) => ProductPage(
-                                    id: shoe.id,
-                                    category: shoe.category,
+                                    sneaker: shoe,
                                   ),
                                 ),
                               );
                             },
-                            child: ProductCard(
-                              price: shoe.price,
-                              category: shoe.category,
-                              id: shoe.id,
-                              name: shoe.name,
-                              image: shoe.image[0],
-                            ),
+                            child: ProductCard(sneaker: shoe),
                           );
                         });
                   }

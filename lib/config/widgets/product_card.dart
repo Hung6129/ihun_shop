@@ -2,27 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:ihun_shop/config/styles/appstyle.dart';
+import 'package:ihun_shop/models/sneaker_model.dart';
 
-class ProductCard extends StatefulWidget {
-  const ProductCard(
-      {super.key,
-      required this.price,
-      required this.category,
-      required this.id,
-      required this.name,
-      required this.image});
+class ProductCard extends StatelessWidget {
+  const ProductCard({
+    super.key,
+    required this.sneaker,
+  });
 
-  final String price;
-  final String category;
-  final String id;
-  final String name;
-  final String image;
+  final Sneakers sneaker;
 
-  @override
-  State<ProductCard> createState() => _ProductCardState();
-}
-
-class _ProductCardState extends State<ProductCard> {
   @override
   Widget build(BuildContext context) {
     bool selected = true;
@@ -46,7 +35,7 @@ class _ProductCardState extends State<ProductCard> {
                     height: MediaQuery.of(context).size.height * 0.23,
                     decoration: BoxDecoration(
                         image: DecorationImage(
-                      image: NetworkImage(widget.image),
+                      image: NetworkImage(sneaker.image[0]),
                       fit: BoxFit.cover,
                     )),
                   ),
@@ -66,12 +55,18 @@ class _ProductCardState extends State<ProductCard> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      widget.name,
+                      sneaker.name,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
                       style: appstyleWithHt(
-                          30.sp, Colors.black, FontWeight.bold, 1.1),
+                        25.sp,
+                        Colors.black,
+                        FontWeight.bold,
+                        1.1,
+                      ),
                     ),
                     Text(
-                      widget.category,
+                      sneaker.category,
                       style: appstyleWithHt(
                           15.sp, Colors.grey, FontWeight.bold, 1.5),
                     )
@@ -84,7 +79,7 @@ class _ProductCardState extends State<ProductCard> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      widget.price,
+                      sneaker.price,
                       style: appstyle(20.sp, Colors.black, FontWeight.w600),
                     ),
                     Row(
