@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:ihun_shop/controllers/mainscreen_provider.dart';
-import 'package:ihun_shop/views/shared/bottom_nav_widget.dart';
 
 import 'package:provider/provider.dart';
+
+import 'bottom_nav_widget.dart';
 
 class BottoNavBar extends StatelessWidget {
   const BottoNavBar({

@@ -6,7 +6,7 @@ import 'package:provider/provider.dart';
 
 import 'controllers/mainscreen_provider.dart';
 import 'controllers/product_provider.dart';
-import 'views/ui/mainscreen.dart';
+import 'views/main/mainscreen.dart';
 
 // entrypoint of the app
 void main() async {
@@ -37,11 +37,11 @@ class MyApp extends StatelessWidget {
         builder: (context, child) {
           return MaterialApp(
             debugShowCheckedModeBanner: false,
-            title: 'dbestech',
+            title: 'iHun Shop',
             theme: ThemeData(
               primarySwatch: Colors.blue,
+              useMaterial3: true,
             ),
-
             // sets the homescreen of the app
             home: const MainScreen(),
           );

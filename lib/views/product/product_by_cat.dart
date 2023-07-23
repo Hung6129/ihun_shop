@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:ihun_shop/models/sneaker_model.dart';
 import 'package:ihun_shop/services/helper.dart';
-import 'package:ihun_shop/views/shared/appstyle.dart';
-import 'package:ihun_shop/views/shared/category_btn.dart';
-import 'package:ihun_shop/views/shared/custom_spacer.dart';
-import 'package:ihun_shop/views/shared/latest_shoes.dart';
+import 'package:ihun_shop/config/styles/appstyle.dart';
+
+import '../../config/widgets/category_btn.dart';
+import '../../config/widgets/custom_spacer.dart';
+import '../../config/widgets/latest_shoes.dart';
+
 
 class ProductByCat extends StatefulWidget {
   const ProductByCat({super.key, required this.tabIndex});

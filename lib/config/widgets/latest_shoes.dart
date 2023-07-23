@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:ihun_shop/models/sneaker_model.dart';
-import 'package:ihun_shop/views/shared/stagger_tile.dart';
+
+
+import 'stagger_tile.dart';
 
 // ignore: camel_case_types
 class latestShoes extends StatelessWidget {

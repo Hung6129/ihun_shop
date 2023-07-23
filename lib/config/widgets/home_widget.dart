@@ -2,14 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:ihun_shop/controllers/product_provider.dart';
 import 'package:ihun_shop/models/sneaker_model.dart';
-import 'package:ihun_shop/views/shared/appstyle.dart';
-import 'package:ihun_shop/views/shared/product_card.dart';
-import 'package:ihun_shop/views/ui/product_by_cat.dart';
+import 'package:ihun_shop/config/styles/appstyle.dart';
+
 
 import 'package:provider/provider.dart';
 
-import '../ui/product_page.dart';
+
+import '../../views/product/product_by_cat.dart';
+import '../../views/product/product_page.dart';
 import 'new_shoes.dart';
+import 'product_card.dart';
 
 class HomeWidget extends StatelessWidget {
   const HomeWidget({

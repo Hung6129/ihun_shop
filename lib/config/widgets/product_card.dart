@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
-import 'package:ihun_shop/views/shared/appstyle.dart';
+import 'package:ihun_shop/config/styles/appstyle.dart';
 
 class ProductCard extends StatefulWidget {
   const ProductCard(

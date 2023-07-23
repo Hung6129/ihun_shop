@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:hive/hive.dart';
-import 'package:ihun_shop/views/shared/appstyle.dart';
-import 'package:ihun_shop/views/shared/checkout_btn.dart';
+import 'package:ihun_shop/config/styles/appstyle.dart';
+
+import '../../config/widgets/checkout_btn.dart';
+
 
 class CartPage extends StatelessWidget {
   CartPage({super.key});

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:ihun_shop/models/sneaker_model.dart';
 
+import '../../config/widgets/home_widget.dart';
 import '../../services/helper.dart';
-import '../shared/appstyle.dart';
-import '../shared/home_widget.dart';
+import '../../config/styles/appstyle.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});

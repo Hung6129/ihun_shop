@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 
 import 'package:ihun_shop/controllers/mainscreen_provider.dart';
-import 'package:ihun_shop/views/shared/bottom_nav.dart';
 
-import 'package:ihun_shop/views/ui/homepage.dart';
-import 'package:ihun_shop/views/ui/profile.dart';
+
+import 'package:ihun_shop/views/home/homepage.dart';
+import 'package:ihun_shop/views/profile/profile.dart';
 
 import 'package:provider/provider.dart';
 
-import 'searchpage.dart';
+import '../../config/widgets/bottom_nav.dart';
+import '../search/searchpage.dart';
 
 class MainScreen extends StatelessWidget {
   const MainScreen({super.key});

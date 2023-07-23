@@ -6,10 +6,12 @@ import 'package:hive/hive.dart';
 import 'package:ihun_shop/controllers/product_provider.dart';
 import 'package:ihun_shop/models/sneaker_model.dart';
 import 'package:ihun_shop/services/helper.dart';
-import 'package:ihun_shop/views/shared/appstyle.dart';
-import 'package:ihun_shop/views/shared/checkout_btn.dart';
+import 'package:ihun_shop/config/styles/appstyle.dart';
+
 
 import 'package:provider/provider.dart';
+
+import '../../config/widgets/checkout_btn.dart';
 
 class ProductPage extends StatefulWidget {
   const ProductPage({super.key, required this.id, required this.category});

@@ -1,6 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:ihun_shop/views/shared/appstyle.dart';
+import 'package:ihun_shop/config/styles/appstyle.dart';
 
 class StaggerTile extends StatefulWidget {
   const StaggerTile(
