@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ihun_shop/config/styles/appstyle.dart';
 
 class CheckoutButton extends StatelessWidget {
@@ -15,17 +16,17 @@ class CheckoutButton extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Padding(
-        padding: const EdgeInsets.all(8),
+        padding: EdgeInsets.all(8.h),
         child: Container(
-          decoration: const BoxDecoration(
+          decoration: BoxDecoration(
               color: Colors.black,
-              borderRadius: BorderRadius.all(Radius.circular(12))),
-          height: 50,
+              borderRadius: BorderRadius.all(Radius.circular(12.h))),
+          height: 50.h,
           width: MediaQuery.of(context).size.width * 0.9,
           child: Center(
             child: Text(
               label,
-              style: appstyle(20, Colors.white, FontWeight.bold),
+              style: appstyle(18.sp, Colors.white, FontWeight.bold),
             ),
           ),
         ),

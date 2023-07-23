@@ -31,7 +31,6 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     // overall theme and app layout
     return ScreenUtilInit(
-        // designSize: const Size(375, 812),
         minTextAdapt: true,
         splitScreenMode: true,
         builder: (context, child) {
@@ -40,7 +39,6 @@ class MyApp extends StatelessWidget {
             title: 'iHun Shop',
             theme: ThemeData(
               primarySwatch: Colors.blue,
-              useMaterial3: true,
             ),
             // sets the homescreen of the app
             home: const MainScreen(),

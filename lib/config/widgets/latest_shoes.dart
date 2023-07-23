@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:ihun_shop/models/sneaker_model.dart';
-
 
 import 'stagger_tile.dart';
 
@@ -28,15 +28,16 @@ class latestShoes extends StatelessWidget {
             return StaggeredGridView.countBuilder(
                 padding: EdgeInsets.zero,
                 crossAxisCount: 2,
-                crossAxisSpacing: 20,
-                mainAxisSpacing: 16,
+                crossAxisSpacing: 15.h,
+                mainAxisSpacing: 16.h,
                 itemCount: male!.length,
                 scrollDirection: Axis.vertical,
                 staggeredTileBuilder: (index) => StaggeredTile.extent(
-                    (index % 2 == 0) ? 1 : 1,
-                    (index % 4 == 1 || index % 4 == 3)
-                        ? MediaQuery.of(context).size.height * 0.35
-                        : MediaQuery.of(context).size.height * 0.3),
+                      (index % 2 == 0) ? 1 : 1,
+                      (index % 4 == 1 || index % 4 == 3)
+                          ? MediaQuery.of(context).size.height * 0.35
+                          : MediaQuery.of(context).size.height * 0.3,
+                    ),
                 itemBuilder: (context, index) {
                   final shoe = snapshot.data![index];
                   return StaggerTile(

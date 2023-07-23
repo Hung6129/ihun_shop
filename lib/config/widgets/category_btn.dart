@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ihun_shop/config/styles/appstyle.dart';
 
 class CategoryBtn extends StatelessWidget {
@@ -13,7 +14,7 @@ class CategoryBtn extends StatelessWidget {
     return MaterialButton(
       onPressed: onPress,
       child: Container(
-        height: 45,
+        height: 45.h,
         width: MediaQuery.of(context).size.width * 0.255,
         decoration: BoxDecoration(
             border: Border.all(
@@ -21,11 +22,11 @@ class CategoryBtn extends StatelessWidget {
               color: buttonClr,
               style: BorderStyle.solid,
             ),
-            borderRadius: const BorderRadius.all(Radius.circular(9))),
+            borderRadius: BorderRadius.all(Radius.circular(9.h))),
         child: Center(
           child: Text(
             label,
-            style: appstyle(20, buttonClr, FontWeight.w600),
+            style: appstyle(18.sp, buttonClr, FontWeight.w600),
           ),
         ),
       ),

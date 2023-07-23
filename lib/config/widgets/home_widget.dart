@@ -4,11 +4,9 @@ import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:ihun_shop/controllers/product_provider.dart';
 import 'package:ihun_shop/models/sneaker_model.dart';
 import 'package:ihun_shop/config/styles/appstyle.dart';
-
+import 'package:ihun_shop/views/product/product_page.dart';
 import 'package:provider/provider.dart';
-
 import '../../views/product/product_by_cat.dart';
-import '../../views/product/product_page.dart';
 import 'new_shoes.dart';
 import 'product_card.dart';
 
@@ -47,11 +45,14 @@ class HomeWidget extends StatelessWidget {
                             onTap: () {
                               productNotifier.shoesSizes = shoe.sizes;
                               Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => ProductPage(
-                                          id: shoe.id,
-                                          category: shoe.category)));
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => ProductPage(
+                                    id: shoe.id,
+                                    category: shoe.category,
+                                  ),
+                                ),
+                              );
                             },
                             child: ProductCard(
                               price: "\$${shoe.price}",
@@ -78,11 +79,13 @@ class HomeWidget extends StatelessWidget {
                   GestureDetector(
                     onTap: () {
                       Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => ProductByCat(
-                                    tabIndex: tabIndex,
-                                  )));
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => ProductByCat(
+                            tabIndex: tabIndex,
+                          ),
+                        ),
+                      );
                     },
                     child: Row(
                       children: [
