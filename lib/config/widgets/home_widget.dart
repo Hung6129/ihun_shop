@@ -43,7 +43,7 @@ class HomeWidget extends StatelessWidget {
                           final shoe = snapshot.data![index];
                           return GestureDetector(
                             onTap: () {
-                              productNotifier.shoesSizes = shoe.sizes;
+                              productNotifier.shoesSizes = shoe.size;
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
@@ -59,7 +59,7 @@ class HomeWidget extends StatelessWidget {
                               category: shoe.category,
                               id: shoe.id,
                               name: shoe.name,
-                              image: shoe.imageUrl[0],
+                              image: shoe.image[0],
                             ),
                           );
                         });
@@ -124,7 +124,7 @@ class HomeWidget extends StatelessWidget {
                           return Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: NewShoes(
-                              imageUrl: shoe.imageUrl[1],
+                              imageUrl: shoe.image[1],
                             ),
                           );
                         });

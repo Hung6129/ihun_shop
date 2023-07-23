@@ -113,7 +113,7 @@ class _ProductPageState extends State<ProductPage> {
                               width: MediaQuery.of(context).size.width,
                               child: PageView.builder(
                                   scrollDirection: Axis.horizontal,
-                                  itemCount: sneaker!.imageUrl.length,
+                                  itemCount: sneaker!.image.length,
                                   controller: pageController,
                                   onPageChanged: (page) {
                                     productNotifier.activePage = page;
@@ -131,7 +131,7 @@ class _ProductPageState extends State<ProductPage> {
                                               MediaQuery.of(context).size.width,
                                           color: Colors.grey.shade300,
                                           child: CachedNetworkImage(
-                                            imageUrl: sneaker.imageUrl[index],
+                                            imageUrl: sneaker.image[index],
                                             fit: BoxFit.contain,
                                           ),
                                         ),
@@ -154,7 +154,7 @@ class _ProductPageState extends State<ProductPage> {
                                                   .height *
                                               0.3,
                                           child: DotsIndicator(
-                                            dotsCount: sneaker.imageUrl.length,
+                                            dotsCount: sneaker.image.length,
                                             position: _current,
                                             decorator: DotsDecorator(
                                               size: Size.square(5.h),
@@ -431,7 +431,7 @@ class _ProductPageState extends State<ProductPage> {
                         "name": sneaker.name,
                         "category": sneaker.category,
                         "sizes": productNotifier.sizes[0],
-                        "imageUrl": sneaker.imageUrl[0],
+                        "imageUrl": sneaker.image[0],
                         "price": sneaker.price,
                         "qty": 1
                       });

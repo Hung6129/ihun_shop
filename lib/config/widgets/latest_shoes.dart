@@ -41,7 +41,7 @@ class latestShoes extends StatelessWidget {
                 itemBuilder: (context, index) {
                   final shoe = snapshot.data![index];
                   return StaggerTile(
-                      imageUrl: shoe.imageUrl[1],
+                      imageUrl: shoe.image[1],
                       name: shoe.name,
                       price: "\$${shoe.price}");
                 });
