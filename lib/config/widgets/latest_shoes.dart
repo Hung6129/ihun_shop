@@ -5,9 +5,8 @@ import 'package:ihun_shop/models/sneaker_model.dart';
 
 import 'stagger_tile.dart';
 
-// ignore: camel_case_types
-class latestShoes extends StatelessWidget {
-  const latestShoes({
+class LatestShoes extends StatelessWidget {
+  const LatestShoes({
     super.key,
     required Future<List<Sneakers>> male,
   }) : _male = male;
@@ -20,7 +19,7 @@ class latestShoes extends StatelessWidget {
         future: _male,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return const CircularProgressIndicator();
+            return const Center(child: CircularProgressIndicator.adaptive());
           } else if (snapshot.hasError) {
             return Text("Error ${snapshot.error}");
           } else {
@@ -35,15 +34,16 @@ class latestShoes extends StatelessWidget {
                 staggeredTileBuilder: (index) => StaggeredTile.extent(
                       (index % 2 == 0) ? 1 : 1,
                       (index % 4 == 1 || index % 4 == 3)
-                          ? MediaQuery.of(context).size.height * 0.35
-                          : MediaQuery.of(context).size.height * 0.3,
+                          ? MediaQuery.of(context).size.height * 0.45
+                          : MediaQuery.of(context).size.height * 0.38,
                     ),
                 itemBuilder: (context, index) {
                   final shoe = snapshot.data![index];
                   return StaggerTile(
-                      imageUrl: shoe.image[1],
-                      name: shoe.name,
-                      price: "\$${shoe.price}");
+                    imageUrl: shoe.image[1],
+                    name: shoe.name,
+                    price: shoe.price,
+                  );
                 });
           }
         });

@@ -34,13 +34,9 @@ class _ProductCardState extends State<ProductCard> {
         child: Container(
           height: MediaQuery.of(context).size.height,
           width: 250.w,
-          decoration: const BoxDecoration(boxShadow: [
-            BoxShadow(
-                color: Colors.white,
-                spreadRadius: 1,
-                blurRadius: 0.6,
-                offset: Offset(1, 1))
-          ]),
+          decoration: const BoxDecoration(
+            color: Color(0xFFF5F5F5),
+          ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -49,8 +45,10 @@ class _ProductCardState extends State<ProductCard> {
                   Container(
                     height: MediaQuery.of(context).size.height * 0.23,
                     decoration: BoxDecoration(
-                        image:
-                            DecorationImage(image: NetworkImage(widget.image))),
+                        image: DecorationImage(
+                      image: NetworkImage(widget.image),
+                      fit: BoxFit.cover,
+                    )),
                   ),
                   Positioned(
                     right: 10,

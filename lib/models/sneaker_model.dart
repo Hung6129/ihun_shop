@@ -3,7 +3,6 @@ import 'dart:convert';
 List<Sneakers> sneakersFromJson(String str) =>
     List<Sneakers>.from(json.decode(str).map((x) => Sneakers.fromMap(x)));
 
-
 class Sneakers {
   final String id;
   final String name;
@@ -70,9 +69,9 @@ class Sneakers {
       name: map['name'] ?? '',
       title: map['title'] ?? '',
       category: map['category'] ?? '',
-      image: List<String>.from((map['image'] )),
+      image: List<String>.from((map['image'])),
       oldPrice: map['oldPrice'] ?? '',
-      size: List<dynamic>.from((map['size'] )),
+      size: List<dynamic>.from((map['size'])),
       price: map['price'] ?? '',
       description: map['description'] ?? '',
     );

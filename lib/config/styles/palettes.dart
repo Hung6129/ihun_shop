@@ -18,4 +18,7 @@ class Palettes {
   static const Color p7 = Color(0xFFC84B31);
   static const Color p8 = Color(0xFFF5EEDC);
   static const Color p9 = Color(0xFFC0D8C0);
+
+  ///
+  static const Color cusGrey = Color(0xFFC0D8C0);
 }

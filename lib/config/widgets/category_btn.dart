@@ -11,25 +11,38 @@ class CategoryBtn extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialButton(
+    return ElevatedButton(
       onPressed: onPress,
-      child: Container(
-        height: 45.h,
-        width: MediaQuery.of(context).size.width * 0.255,
-        decoration: BoxDecoration(
-            border: Border.all(
-              width: 1,
-              color: buttonClr,
-              style: BorderStyle.solid,
-            ),
-            borderRadius: BorderRadius.all(Radius.circular(9.h))),
-        child: Center(
-          child: Text(
-            label,
-            style: appstyle(18.sp, buttonClr, FontWeight.w600),
-          ),
+      style: ElevatedButton.styleFrom(
+        backgroundColor: buttonClr,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(9.h),
         ),
       ),
-    );
+      child: Text(
+        label,
+        style: appstyle(14.sp, buttonClr, FontWeight.w600),
+      ),
+    )
+        // Container(
+        //   height: 45.h,
+        //   padding: EdgeInsets.symmetric(horizontal: 10.w),
+        //   decoration: BoxDecoration(
+        //       border: Border.all(
+        //         width: 1,
+        //         color: buttonClr,
+        //         style: BorderStyle.solid,
+        //       ),
+        //       borderRadius: BorderRadius.all(Radius.circular(9.h))),
+        //   child: Center(
+        //     child: Text(
+        //       label,
+        //       overflow: TextOverflow.ellipsis,
+        //       maxLines: 1,
+        //       style: appstyle(14.sp, buttonClr, FontWeight.w600),
+        //     ),
+        //   ),
+        // )
+        ;
   }
 }

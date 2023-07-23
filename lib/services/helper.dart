@@ -12,7 +12,10 @@ class Helper {
     if (response.statusCode == 200) {
       final data = response.data as List<dynamic>;
       final products = data.map((e) => Sneakers.fromMap(e)).toList();
-      return products;
+      final maleProducts = products
+          .where((element) => element.category == "Men's Shoes")
+          .toList();
+      return maleProducts;
     } else {
       throw Exception("Failed to get sneakers list");
     }
@@ -22,9 +25,12 @@ class Helper {
   Future<List<Sneakers>> getFemaleSneakers() async {
     final response = await dio.get(AppUrls.baseUrl + AppUrls.products);
     if (response.statusCode == 200) {
-     final data = response.data as List<dynamic>;
+      final data = response.data as List<dynamic>;
       final products = data.map((e) => Sneakers.fromMap(e)).toList();
-      return products;
+      final womanProducts = products
+          .where((element) => element.category == "Women's Shoes")
+          .toList();
+      return womanProducts;
     } else {
       throw Exception("Failed to get sneakers list");
     }
@@ -34,9 +40,12 @@ class Helper {
   Future<List<Sneakers>> getKidsSneakers() async {
     final response = await dio.get(AppUrls.baseUrl + AppUrls.products);
     if (response.statusCode == 200) {
-     final data = response.data as List<dynamic>;
+      final data = response.data as List<dynamic>;
       final products = data.map((e) => Sneakers.fromMap(e)).toList();
-      return products;
+      final kidProducts = products
+          .where((element) => element.category == "Kids' Shoes")
+          .toList();
+      return kidProducts;
     } else {
       throw Exception("Failed to get sneakers list");
     }
