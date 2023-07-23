@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:ihun_shop/config/styles/appstyle.dart';
 
@@ -32,7 +33,7 @@ class _ProductCardState extends State<ProductCard> {
         borderRadius: const BorderRadius.all(Radius.circular(16)),
         child: Container(
           height: MediaQuery.of(context).size.height,
-          width: MediaQuery.of(context).size.width * 0.6,
+          width: 250.w,
           decoration: const BoxDecoration(boxShadow: [
             BoxShadow(
                 color: Colors.white,
@@ -69,12 +70,12 @@ class _ProductCardState extends State<ProductCard> {
                     Text(
                       widget.name,
                       style: appstyleWithHt(
-                          36, Colors.black, FontWeight.bold, 1.1),
+                          30.sp, Colors.black, FontWeight.bold, 1.1),
                     ),
                     Text(
                       widget.category,
-                      style:
-                          appstyleWithHt(18, Colors.grey, FontWeight.bold, 1.5),
+                      style: appstyleWithHt(
+                          15.sp, Colors.grey, FontWeight.bold, 1.5),
                     )
                   ],
                 ),
@@ -86,13 +87,13 @@ class _ProductCardState extends State<ProductCard> {
                   children: [
                     Text(
                       widget.price,
-                      style: appstyle(30, Colors.black, FontWeight.w600),
+                      style: appstyle(20.sp, Colors.black, FontWeight.w600),
                     ),
                     Row(
                       children: [
                         Text(
                           "Colors",
-                          style: appstyle(18, Colors.grey, FontWeight.w500),
+                          style: appstyle(15.sp, Colors.grey, FontWeight.w500),
                         ),
                         const SizedBox(
                           width: 5,
