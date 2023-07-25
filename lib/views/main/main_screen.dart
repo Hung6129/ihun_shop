@@ -1,15 +1,12 @@
 import 'package:flutter/material.dart';
-
 import 'package:ihun_shop/controllers/mainscreen_provider.dart';
-
-
-import 'package:ihun_shop/views/home/homepage.dart';
-import 'package:ihun_shop/views/profile/profile.dart';
+import 'package:ihun_shop/views/favorite/favorite_page.dart';
+import 'package:ihun_shop/views/home/home_page.dart';
+import 'package:ihun_shop/views/profile/profile_page.dart';
 
 import 'package:provider/provider.dart';
-
 import '../../config/widgets/bottom_nav.dart';
-import '../search/searchpage.dart';
+import '../search/search_page.dart';
 
 class MainScreen extends StatelessWidget {
   const MainScreen({super.key});
@@ -19,7 +16,7 @@ class MainScreen extends StatelessWidget {
     List<Widget> pageList = [
       const HomePage(),
       const SearchPage(),
-      const HomePage(),
+      const FavoritePage(),
       const ProfilePage()
     ];
     return Consumer<MainScreenNotifier>(

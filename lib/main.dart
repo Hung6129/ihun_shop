@@ -6,21 +6,24 @@ import 'package:provider/provider.dart';
 
 import 'controllers/mainscreen_provider.dart';
 import 'controllers/product_provider.dart';
-import 'views/main/mainscreen.dart';
+import 'views/main/main_screen.dart';
 
 // entrypoint of the app
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
   await Hive.initFlutter();
-
   await Hive.openBox('cart_box');
   await Hive.openBox('fav_box');
   //method that initializes the app and run top level wigets
-  runApp(MultiProvider(providers: [
-    ChangeNotifierProvider(create: (context) => MainScreenNotifier()),
-    ChangeNotifierProvider(create: (context) => ProductNotifier()),
-  ], child: const MyApp()));
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => MainScreenNotifier()),
+        ChangeNotifierProvider(create: (context) => ProductNotifier()),
+      ],
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -37,9 +40,7 @@ class MyApp extends StatelessWidget {
           return MaterialApp(
             debugShowCheckedModeBanner: false,
             title: 'iHun Shop',
-            theme: ThemeData(
-              primarySwatch: Colors.blue,
-            ),
+            theme: ThemeData(),
             // sets the homescreen of the app
             home: const MainScreen(),
           );
