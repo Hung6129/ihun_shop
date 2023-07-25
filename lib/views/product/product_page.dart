@@ -9,18 +9,26 @@ import 'package:ihun_shop/controllers/product_provider.dart';
 import 'package:ihun_shop/models/sneaker_model.dart';
 
 import 'package:ihun_shop/config/styles/appstyle.dart';
+import 'package:ihun_shop/views/favorite/favorite_page.dart';
 
 import 'package:provider/provider.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 
+import '../../controllers/favorites_provider.dart';
+
 // ignore: must_be_immutable
-class ProductPage extends StatelessWidget {
-  ProductPage({
+class ProductPage extends StatefulWidget {
+  const ProductPage({
     super.key,
     required this.sneaker,
   });
   final Sneakers sneaker;
 
+  @override
+  State<ProductPage> createState() => _ProductPageState();
+}
+
+class _ProductPageState extends State<ProductPage> {
   final PageController pageController = PageController();
 
   final _cartBox = Hive.box('cart_box');
@@ -31,8 +39,29 @@ class ProductPage extends StatelessWidget {
     await _cartBox.add(newCart);
   }
 
+  final _favBox = Hive.box('fav_box');
+
+  Future<void> _addToFav(Map<String, dynamic> item) async {
+    await _favBox.add(item);
+    getFavorites();
+  }
+
+  getFavorites() {
+    final favProvider = Provider.of<FavoritesNotifier>(context, listen: false);
+    final favData = _favBox.keys.map((key) {
+      final value = _favBox.get(key);
+      return {
+        'key': key,
+        'id': value['id'],
+      };
+    }).toList();
+    favProvider.favorites = favData.toList();
+    favProvider.ids = favProvider.favorites.map((e) => e['id']).toList();
+  }
+
   @override
   Widget build(BuildContext context) {
+    final favoriteNotifier = Provider.of<FavoritesNotifier>(context);
     return Consumer<ProductNotifier>(
       builder: (context, productNotifier, child) {
         return Scaffold(
@@ -58,11 +87,35 @@ class ProductPage extends StatelessWidget {
                         ),
                       ),
                       GestureDetector(
-                        onTap: null,
-                        child: const Icon(
-                          Ionicons.ellipsis_horizontal,
-                          color: Colors.black,
-                        ),
+                        onTap: () {
+
+                          if (favoriteNotifier.ids
+                              .contains(widget.sneaker.id)) {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const FavoritePage(),
+                              ),
+                            );
+                          } else {
+                            _addToFav({
+                              "id": widget.sneaker.id,
+                              "name": widget.sneaker.name,
+                              "category": widget.sneaker.category,
+                              "imageUrl": widget.sneaker.image[0],
+                              "price": widget.sneaker.price,
+                            });
+                          }
+                        },
+                        child: favoriteNotifier.ids.contains(widget.sneaker.id)
+                            ? const Icon(
+                                AntDesign.heart,
+                                color: Colors.black,
+                              )
+                            : const Icon(
+                                AntDesign.hearto,
+                                color: Colors.black,
+                              ),
                       )
                     ],
                   ),
@@ -80,7 +133,7 @@ class ProductPage extends StatelessWidget {
                         width: MediaQuery.of(context).size.width,
                         child: PageView.builder(
                             scrollDirection: Axis.horizontal,
-                            itemCount: sneaker.image.length,
+                            itemCount: widget.sneaker.image.length,
                             controller: pageController,
                             onPageChanged: (page) {
                               productNotifier.activePage = page;
@@ -95,7 +148,7 @@ class ProductPage extends StatelessWidget {
                                     width: MediaQuery.of(context).size.width,
                                     color: Colors.grey.shade300,
                                     child: CachedNetworkImage(
-                                      imageUrl: sneaker.image[index],
+                                      imageUrl: widget.sneaker.image[index],
                                       fit: BoxFit.cover,
                                     ),
                                   ),
@@ -114,7 +167,7 @@ class ProductPage extends StatelessWidget {
                                     height: MediaQuery.of(context).size.height *
                                         0.3,
                                     child: DotsIndicator(
-                                      dotsCount: sneaker.image.length,
+                                      dotsCount: widget.sneaker.image.length,
                                       position: _current,
                                       decorator: DotsDecorator(
                                         size: Size.square(5.h),
@@ -148,14 +201,14 @@ class ProductPage extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    sneaker.name,
+                                    widget.sneaker.name,
                                     style: appstyle(
                                         30.sp, Colors.black, FontWeight.bold),
                                   ),
                                   Row(
                                     children: [
                                       Text(
-                                        sneaker.category,
+                                        widget.sneaker.category,
                                         style: appstyle(
                                             20, Colors.grey, FontWeight.w500),
                                       ),
@@ -188,7 +241,7 @@ class ProductPage extends StatelessWidget {
                                         MainAxisAlignment.spaceBetween,
                                     children: [
                                       Text(
-                                        "\$${sneaker.price}",
+                                        widget.sneaker.price,
                                         style: appstyle(
                                             26, Colors.black, FontWeight.w600),
                                       ),
@@ -319,7 +372,7 @@ class ProductPage extends StatelessWidget {
                                     width:
                                         MediaQuery.of(context).size.width * 0.8,
                                     child: Text(
-                                      sneaker.title,
+                                      widget.sneaker.title,
                                       maxLines: 2,
                                       style: appstyle(
                                           26, Colors.black, FontWeight.w700),
@@ -329,7 +382,7 @@ class ProductPage extends StatelessWidget {
                                     height: 10,
                                   ),
                                   Text(
-                                    sneaker.description,
+                                    widget.sneaker.description,
                                     textAlign: TextAlign.justify,
                                     maxLines: 4,
                                     style: appstyle(
@@ -355,15 +408,15 @@ class ProductPage extends StatelessWidget {
             child: CheckoutButton(
               onTap: () async {
                 _createCart({
-                  "id": sneaker.id,
-                  "name": sneaker.name,
-                  "category": sneaker.category,
+                  "id": widget.sneaker.id,
+                  "name": widget.sneaker.name,
+                  "category": widget.sneaker.category,
                   "sizes": productNotifier.sizes[0],
-                  "imageUrl": sneaker.image[0],
-                  "price": sneaker.price,
+                  "imageUrl": widget.sneaker.image[0],
+                  "price": widget.sneaker.price,
                   "qty": 1
                 });
-                print(sneaker.name);
+                print(widget.sneaker.name);
                 productNotifier.sizes.clear();
                 Navigator.pop(context);
               },

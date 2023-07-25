@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:hive_flutter/hive_flutter.dart';
+import 'package:flutter_vector_icons/flutter_vector_icons.dart';
+import 'package:hive/hive.dart';
 import 'package:ihun_shop/config/styles/appstyle.dart';
 import 'package:ihun_shop/models/sneaker_model.dart';
+import 'package:provider/provider.dart';
+
+import '../../controllers/favorites_provider.dart';
+import '../../views/favorite/favorite_page.dart';
 
 class ProductCard extends StatefulWidget {
   const ProductCard({
@@ -18,28 +23,28 @@ class ProductCard extends StatefulWidget {
 class _ProductCardState extends State<ProductCard> {
   final _favBox = Hive.box('fav_box');
 
-  // Future<void> _addFav(Map<String, dynamic> sneaker) async {
-  //   await _favBox.add(sneaker);
-  //   // getFavorites();
-  // }
+  Future<void> _addToFav(Map<String, dynamic> item) async {
+    await _favBox.add(item);
+    getFavorites();
+  }
 
-  // getFavorites() {
-  //   final favData = _favBox.keys.map((key) {
-  //     final item = _favBox.get(key);
-  //     return {
-  //       "key": key,
-  //       "id": "id",
-  //     };
-  //   }).toList();
-  //   favor = favData.toList();
-  //   id = favor.map((item) => item['id']).toList();
-  //   setState(() {});
-  // }
+  getFavorites() {
+    final favProvider = Provider.of<FavoritesNotifier>(context, listen: false);
+    final favData = _favBox.keys.map((key) {
+      final value = _favBox.get(key);
+      return {
+        'key': key,
+        'id': value['id'],
+      };
+    }).toList();
+    favProvider.favorites = favData.toList();
+    favProvider.ids = favProvider.favorites.map((e) => e['id']).toList();
+  }
 
   @override
   Widget build(BuildContext context) {
+    final favoriteNotifier = Provider.of<FavoritesNotifier>(context);
     bool selected = true;
-
     return Padding(
       padding: const EdgeInsets.fromLTRB(8, 0, 20, 0),
       child: ClipRRect(
@@ -64,38 +69,39 @@ class _ProductCardState extends State<ProductCard> {
                       ),
                     ),
                   ),
-                  ValueListenableBuilder(
-                    valueListenable: _favBox.listenable(),
-                    builder: (context, box, child) {
-                      final isAdded = box.containsKey(widget.sneaker.id);
-                      return Positioned(
-                        right: 10,
-                        top: 10,
-                        child: GestureDetector(
-                          onTap: () async {
-                            final list = _favBox.values.toList();
-                            print(list);
-                            if (isAdded == true) {
-                              print("Navigating to favorites");
-                            } else {
-                              await _favBox.add({
-                                "id": widget.sneaker.id,
-                                "name": widget.sneaker.name,
-                              });
-                              print("Added to favorites");
-                            }
-                          },
-                          child: isAdded
-                              ? const Icon(
-                                  Icons.favorite,
-                                )
-                              : const Icon(
-                                  Icons.favorite_outline,
-                                ),
-                        ),
-                      );
-                    },
-                  ),
+                  Positioned(
+                    right: 10,
+                    top: 10,
+                    child: GestureDetector(
+                      onTap: () {
+                        if (favoriteNotifier.ids.contains(widget.sneaker.id)) {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const FavoritePage(),
+                            ),
+                          );
+                        } else {
+                          _addToFav({
+                            "id": widget.sneaker.id,
+                            "name": widget.sneaker.name,
+                            "category": widget.sneaker.category,
+                            "imageUrl": widget.sneaker.image[0],
+                            "price": widget.sneaker.price,
+                          });
+                        }
+                      },
+                      child: favoriteNotifier.ids.contains(widget.sneaker.id)
+                          ? const Icon(
+                              AntDesign.heart,
+                              color: Colors.black,
+                            )
+                          : const Icon(
+                              AntDesign.hearto,
+                              color: Colors.black,
+                            ),
+                    ),
+                  )
                 ],
               ),
               Padding(
