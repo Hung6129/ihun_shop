@@ -41,11 +41,6 @@ class _ProductPageState extends State<ProductPage> {
 
   final _favBox = Hive.box('fav_box');
 
-  Future<void> _addToFav(Map<String, dynamic> item) async {
-    await _favBox.add(item);
-    getFavorites();
-  }
-
   getFavorites() {
     final favProvider = Provider.of<FavoritesNotifier>(context, listen: false);
     final favData = _favBox.keys.map((key) {
@@ -62,6 +57,7 @@ class _ProductPageState extends State<ProductPage> {
   @override
   Widget build(BuildContext context) {
     final favoriteNotifier = Provider.of<FavoritesNotifier>(context);
+    favoriteNotifier.getFavorites();
     return Consumer<ProductNotifier>(
       builder: (context, productNotifier, child) {
         return Scaffold(
@@ -97,13 +93,14 @@ class _ProductPageState extends State<ProductPage> {
                               ),
                             );
                           } else {
-                            _addToFav({
+                            favoriteNotifier.addToFav({
                               "id": widget.sneaker.id,
                               "name": widget.sneaker.name,
                               "category": widget.sneaker.category,
                               "imageUrl": widget.sneaker.image[0],
                               "price": widget.sneaker.price,
                             });
+                            setState(() {});
                           }
                         },
                         child: favoriteNotifier.ids.contains(widget.sneaker.id)
@@ -115,7 +112,7 @@ class _ProductPageState extends State<ProductPage> {
                                 AntDesign.hearto,
                                 color: Colors.black,
                               ),
-                      )
+                      ),
                     ],
                   ),
                 ),

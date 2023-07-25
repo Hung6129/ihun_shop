@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
-import 'package:hive/hive.dart';
+
 import 'package:ihun_shop/src/config/styles/appstyle.dart';
 
 import 'package:ihun_shop/src/models/sneaker_model.dart';
@@ -22,29 +22,10 @@ class ProductCard extends StatefulWidget {
 }
 
 class _ProductCardState extends State<ProductCard> {
-  final _favBox = Hive.box('fav_box');
-
-  Future<void> _addToFav(Map<String, dynamic> item) async {
-    await _favBox.add(item);
-    getFavorites();
-  }
-
-  getFavorites() {
-    final favProvider = Provider.of<FavoritesNotifier>(context, listen: false);
-    final favData = _favBox.keys.map((key) {
-      final value = _favBox.get(key);
-      return {
-        'key': key,
-        'id': value['id'],
-      };
-    }).toList();
-    favProvider.favorites = favData.toList();
-    favProvider.ids = favProvider.favorites.map((e) => e['id']).toList();
-  }
-
   @override
   Widget build(BuildContext context) {
     final favoriteNotifier = Provider.of<FavoritesNotifier>(context);
+    favoriteNotifier.getFavorites();
     bool selected = true;
     return Padding(
       padding: const EdgeInsets.fromLTRB(8, 0, 20, 0),
@@ -83,13 +64,14 @@ class _ProductCardState extends State<ProductCard> {
                             ),
                           );
                         } else {
-                          _addToFav({
+                          favoriteNotifier.addToFav({
                             "id": widget.sneaker.id,
                             "name": widget.sneaker.name,
                             "category": widget.sneaker.category,
                             "imageUrl": widget.sneaker.image[0],
                             "price": widget.sneaker.price,
                           });
+                          setState(() {});
                         }
                       },
                       child: favoriteNotifier.ids.contains(widget.sneaker.id)

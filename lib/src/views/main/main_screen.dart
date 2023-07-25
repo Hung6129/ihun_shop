@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ihun_shop/src/config/constants.dart';
 import 'package:ihun_shop/src/controllers/mainscreen_provider.dart';
@@ -26,13 +27,26 @@ class MainScreen extends StatelessWidget {
               mainScreenNotifier.pageIndex = index;
             },
             items: const [
-              BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
               BottomNavigationBarItem(
-                  icon: Icon(Icons.search), label: 'Search'),
+                activeIcon: Icon(CupertinoIcons.house_alt_fill),
+                icon: Icon(CupertinoIcons.house_alt),
+                label: 'Home',
+              ),
               BottomNavigationBarItem(
-                  icon: Icon(Icons.favorite), label: 'Favorite'),
+                activeIcon: Icon(CupertinoIcons.search_circle_fill),
+                icon: Icon(CupertinoIcons.search_circle),
+                label: 'Search',
+              ),
               BottomNavigationBarItem(
-                  icon: Icon(Icons.person), label: 'Profile'),
+                activeIcon: Icon(CupertinoIcons.square_favorites_alt_fill),
+                icon: Icon(CupertinoIcons.square_favorites_alt),
+                label: 'Favorite',
+              ),
+              BottomNavigationBarItem(
+                activeIcon: Icon(CupertinoIcons.person_alt_circle_fill),
+                icon: Icon(CupertinoIcons.person_alt_circle),
+                label: 'Profile',
+              ),
             ],
           ),
         );
