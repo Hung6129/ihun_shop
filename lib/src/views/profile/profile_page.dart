@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:ihun_shop/config/styles/appstyle.dart';
+import 'package:ihun_shop/src/config/styles/appstyle.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});

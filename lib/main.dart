@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:ihun_shop/controllers/favorites_provider.dart';
+
 
 import 'package:provider/provider.dart';
 
-import 'controllers/mainscreen_provider.dart';
-import 'controllers/product_provider.dart';
-import 'views/main/main_screen.dart';
+import 'src/controllers/favorites_provider.dart';
+import 'src/controllers/mainscreen_provider.dart';
+import 'src/controllers/product_provider.dart';
+import 'src/views/main/main_screen.dart';
+
+
 
 // entrypoint of the app
 void main() async {
