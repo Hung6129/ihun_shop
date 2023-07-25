@@ -68,6 +68,8 @@ class ProductPage extends StatelessWidget {
                   ),
                 ),
                 pinned: true,
+                floating: true,
+                snap: true,
                 backgroundColor: Colors.transparent,
                 expandedHeight: MediaQuery.of(context).size.height,
                 flexibleSpace: FlexibleSpaceBar(
