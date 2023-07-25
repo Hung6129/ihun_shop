@@ -224,7 +224,7 @@ class _ProductPageState extends State<ProductPage> {
                                     ],
                                   ),
                                   const SizedBox(
-                                    height: 20,
+                                    height: 10,
                                   ),
                                   Row(
                                     mainAxisAlignment:
@@ -261,7 +261,7 @@ class _ProductPageState extends State<ProductPage> {
                                     ],
                                   ),
                                   const SizedBox(
-                                    height: 20,
+                                    height: 10,
                                   ),
                                   Column(
                                     children: [
@@ -291,26 +291,15 @@ class _ProductPageState extends State<ProductPage> {
                                             itemCount: productNotifier
                                                 .shoeSizes.length,
                                             scrollDirection: Axis.horizontal,
-                                            padding: EdgeInsets.zero,
                                             itemBuilder: (context, index) {
                                               final sizes = productNotifier
                                                   .shoeSizes[index];
-
                                               return Padding(
                                                 padding:
                                                     const EdgeInsets.symmetric(
                                                   horizontal: 8.0,
                                                 ),
                                                 child: ChoiceChip(
-                                                  shape: RoundedRectangleBorder(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              60),
-                                                      side: const BorderSide(
-                                                          color: Colors.black,
-                                                          width: 1,
-                                                          style: BorderStyle
-                                                              .solid)),
                                                   disabledColor: Colors.white,
                                                   label: Text(
                                                     sizes['size'],
@@ -334,8 +323,7 @@ class _ProductPageState extends State<ProductPage> {
                                                       productNotifier.sizes
                                                           .add(sizes['size']);
                                                     }
-                                                    print(
-                                                        productNotifier.sizes);
+
                                                     productNotifier
                                                         .toggleCheck(index);
                                                   },
@@ -345,29 +333,21 @@ class _ProductPageState extends State<ProductPage> {
                                       )
                                     ],
                                   ),
-                                  const SizedBox(
-                                    height: 10,
-                                  ),
-                                  const Divider(
-                                    indent: 10,
-                                    endIndent: 10,
-                                    color: Colors.black,
-                                  ),
-                                  const SizedBox(
-                                    height: 10,
-                                  ),
-                                  SizedBox(
-                                    width:
-                                        MediaQuery.of(context).size.width * 0.8,
-                                    child: Text(
-                                      widget.sneaker.title,
-                                      maxLines: 2,
-                                      style: appstyle(
-                                          26, Colors.black, FontWeight.w700),
+                                  const Padding(
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal: 5, vertical: 10),
+                                    child: Divider(
+                                      indent: 5,
+                                      endIndent: 5,
+                                      color: Colors.black,
                                     ),
                                   ),
-                                  const SizedBox(
-                                    height: 10,
+                                  Text(
+                                    widget.sneaker.title,
+                                    maxLines: 2,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: appstyle(
+                                        14.sp, Colors.black, FontWeight.w700),
                                   ),
                                   Text(
                                     widget.sneaker.description,

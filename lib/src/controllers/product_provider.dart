@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:ihun_shop/src/models/sneaker_model.dart';
+import 'package:ihun_shop/src/services/helper.dart';
 
 class ProductNotifier extends ChangeNotifier {
   int _activepage = 0;
@@ -32,10 +34,25 @@ class ProductNotifier extends ChangeNotifier {
     notifyListeners();
   }
 
-    List<String> get sizes => _sizes;
+  List<String> get sizes => _sizes;
 
   set sizes(List<String> newSizes) {
     _sizes = newSizes;
     notifyListeners();
+  }
+
+  Future<List<Sneakers>> getMale() async {
+    final male = await Helper().getMaleSneakers();
+    return male;
+  }
+
+  Future<List<Sneakers>> getFemale() async {
+    final female = await Helper().getFemaleSneakers();
+    return female;
+  }
+
+  Future<List<Sneakers>> getkids() async {
+    final kids = await Helper().getKidsSneakers();
+    return kids;
   }
 }

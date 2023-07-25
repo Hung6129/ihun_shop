@@ -4,11 +4,12 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ihun_shop/src/config/styles/appstyle.dart';
 
 class StaggerTile extends StatefulWidget {
-  const StaggerTile(
-      {super.key,
-      required this.imageUrl,
-      required this.name,
-      required this.price});
+  const StaggerTile({
+    super.key,
+    required this.imageUrl,
+    required this.name,
+    required this.price,
+  });
 
   final String imageUrl;
   final String name;

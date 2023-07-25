@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:ihun_shop/src/models/sneaker_model.dart';
-
+import 'package:ihun_shop/src/views/product/product_page.dart';
 
 import 'stagger_tile.dart';
 
@@ -40,10 +40,20 @@ class LatestShoes extends StatelessWidget {
                     ),
                 itemBuilder: (context, index) {
                   final shoe = snapshot.data![index];
-                  return StaggerTile(
-                    imageUrl: shoe.image[1],
-                    name: shoe.name,
-                    price: shoe.price,
+                  return GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => ProductPage(sneaker: shoe),
+                        ),
+                      );
+                    },
+                    child: StaggerTile(
+                      imageUrl: shoe.image[1],
+                      name: shoe.name,
+                      price: shoe.price,
+                    ),
                   );
                 });
           }
