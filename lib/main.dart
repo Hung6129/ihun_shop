@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:ihun_shop/controllers/favorites_provider.dart';
 
 import 'package:provider/provider.dart';
 
@@ -20,6 +21,7 @@ void main() async {
       providers: [
         ChangeNotifierProvider(create: (context) => MainScreenNotifier()),
         ChangeNotifierProvider(create: (context) => ProductNotifier()),
+        ChangeNotifierProvider(create: (context) => FavoritesNotifier()),
       ],
       child: const MyApp(),
     ),
@@ -34,16 +36,17 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     // overall theme and app layout
     return ScreenUtilInit(
-        minTextAdapt: true,
-        splitScreenMode: true,
-        builder: (context, child) {
-          return MaterialApp(
-            debugShowCheckedModeBanner: false,
-            title: 'iHun Shop',
-            theme: ThemeData(),
-            // sets the homescreen of the app
-            home: const MainScreen(),
-          );
-        });
+      minTextAdapt: true,
+      splitScreenMode: true,
+      builder: (context, child) {
+        return MaterialApp(
+          debugShowCheckedModeBanner: false,
+          title: 'iHun Shop',
+          theme: ThemeData(),
+          // sets the homescreen of the app
+          home: const MainScreen(),
+        );
+      },
+    );
   }
 }
