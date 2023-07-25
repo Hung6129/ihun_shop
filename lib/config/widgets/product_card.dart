@@ -1,16 +1,40 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_vector_icons/flutter_vector_icons.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:ihun_shop/config/styles/appstyle.dart';
 import 'package:ihun_shop/models/sneaker_model.dart';
 
-class ProductCard extends StatelessWidget {
+class ProductCard extends StatefulWidget {
   const ProductCard({
     super.key,
     required this.sneaker,
   });
-
   final Sneakers sneaker;
+
+  @override
+  State<ProductCard> createState() => _ProductCardState();
+}
+
+class _ProductCardState extends State<ProductCard> {
+  final _favBox = Hive.box('fav_box');
+
+  // Future<void> _addFav(Map<String, dynamic> sneaker) async {
+  //   await _favBox.add(sneaker);
+  //   // getFavorites();
+  // }
+
+  // getFavorites() {
+  //   final favData = _favBox.keys.map((key) {
+  //     final item = _favBox.get(key);
+  //     return {
+  //       "key": key,
+  //       "id": "id",
+  //     };
+  //   }).toList();
+  //   favor = favData.toList();
+  //   id = favor.map((item) => item['id']).toList();
+  //   setState(() {});
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -34,18 +58,43 @@ class ProductCard extends StatelessWidget {
                   Container(
                     height: MediaQuery.of(context).size.height * 0.23,
                     decoration: BoxDecoration(
-                        image: DecorationImage(
-                      image: NetworkImage(sneaker.image[0]),
-                      fit: BoxFit.cover,
-                    )),
-                  ),
-                  Positioned(
-                    right: 10,
-                    top: 10,
-                    child: GestureDetector(
-                      onTap: null,
-                      child: const Icon(MaterialCommunityIcons.heart_outline),
+                      image: DecorationImage(
+                        image: NetworkImage(widget.sneaker.image[0]),
+                        fit: BoxFit.cover,
+                      ),
                     ),
+                  ),
+                  ValueListenableBuilder(
+                    valueListenable: _favBox.listenable(),
+                    builder: (context, box, child) {
+                      final isAdded = box.containsKey(widget.sneaker.id);
+                      return Positioned(
+                        right: 10,
+                        top: 10,
+                        child: GestureDetector(
+                          onTap: () async {
+                            final list = _favBox.values.toList();
+                            print(list);
+                            if (isAdded == true) {
+                              print("Navigating to favorites");
+                            } else {
+                              await _favBox.add({
+                                "id": widget.sneaker.id,
+                                "name": widget.sneaker.name,
+                              });
+                              print("Added to favorites");
+                            }
+                          },
+                          child: isAdded
+                              ? const Icon(
+                                  Icons.favorite,
+                                )
+                              : const Icon(
+                                  Icons.favorite_outline,
+                                ),
+                        ),
+                      );
+                    },
                   ),
                 ],
               ),
@@ -55,7 +104,7 @@ class ProductCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      sneaker.name,
+                      widget.sneaker.name,
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                       style: appstyleWithHt(
@@ -66,7 +115,7 @@ class ProductCard extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      sneaker.category,
+                      widget.sneaker.category,
                       style: appstyleWithHt(
                           15.sp, Colors.grey, FontWeight.bold, 1.5),
                     )
@@ -79,7 +128,7 @@ class ProductCard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      sneaker.price,
+                      widget.sneaker.price,
                       style: appstyle(20.sp, Colors.black, FontWeight.w600),
                     ),
                     Row(
