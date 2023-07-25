@@ -60,7 +60,9 @@ class _ProductCardState extends State<ProductCard> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => const FavoritePage(),
+                              builder: (context) => const FavoritePage(
+                                autoLeading: true,
+                              ),
                             ),
                           );
                         } else {

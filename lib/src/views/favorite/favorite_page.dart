@@ -6,8 +6,8 @@ import 'package:ihun_shop/src/config/constants.dart';
 import 'package:ihun_shop/src/config/styles/appstyle.dart';
 
 class FavoritePage extends StatefulWidget {
-  const FavoritePage({super.key});
-
+  const FavoritePage({super.key, required this.autoLeading});
+  final bool autoLeading;
   @override
   State<FavoritePage> createState() => _FavoritePageState();
 }
@@ -34,6 +34,27 @@ class _FavoritePageState extends State<FavoritePage> {
     }).toList();
     favList = data.reversed.toList();
     return Scaffold(
+      appBar: AppBar(
+        leading: widget.autoLeading
+            ? IconButton(
+                icon: const Icon(
+                  Icons.arrow_back_ios,
+                  color: Colors.black,
+                ),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+              )
+            : null,
+        automaticallyImplyLeading: widget.autoLeading,
+        title: Text(
+          'My Favorites',
+          style: appstyle(18.sp, Colors.black, FontWeight.bold),
+        ),
+        centerTitle: true,
+        elevation: 0,
+        backgroundColor: Colors.transparent,
+      ),
       body: favList.isEmpty
           ? Center(
               child: Text(
@@ -49,18 +70,28 @@ class _FavoritePageState extends State<FavoritePage> {
               height: MediaQuery.of(context).size.height,
               child: ListView.builder(
                 itemCount: favList.length,
-                padding: const EdgeInsets.only(top: 100),
                 itemBuilder: (BuildContext context, int index) {
                   return ListTile(
+                    contentPadding: const EdgeInsets.all(10),
                     onTap: () {},
                     leading: CachedNetworkImage(
-                      height: 50,
-                      width: 50,
+                      height: 75.h,
+                      width: 75.w,
                       imageUrl: favList[index]['imageUrl'],
                       fit: BoxFit.cover,
                     ),
-                    title: Text(favList[index]['name']),
-                    subtitle: Text(favList[index]['price'].toString()),
+                    title: Text(
+                      favList[index]['name'],
+                      style: appstyle(14.sp, Colors.black, FontWeight.w500),
+                    ),
+                    subtitle: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(favList[index]['category'].toString()),
+                        Text(favList[index]['price'].toString()),
+                      ],
+                    ),
                     trailing: IconButton(
                       icon: const Icon(Icons.delete),
                       onPressed: () {

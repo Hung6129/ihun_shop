@@ -89,7 +89,9 @@ class _ProductPageState extends State<ProductPage> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => const FavoritePage(),
+                                builder: (context) => const FavoritePage(
+                                  autoLeading: true,
+                                ),
                               ),
                             );
                           } else {
@@ -148,14 +150,6 @@ class _ProductPageState extends State<ProductPage> {
                                       fit: BoxFit.cover,
                                     ),
                                   ),
-                                  Positioned(
-                                      top: MediaQuery.of(context).size.height *
-                                          0.1,
-                                      right: 20,
-                                      child: const Icon(
-                                        AntDesign.hearto,
-                                        color: Colors.grey,
-                                      )),
                                   Positioned(
                                     bottom: 0,
                                     right: 0,
@@ -321,15 +315,13 @@ class _ProductPageState extends State<ProductPage> {
                                                   label: Text(
                                                     sizes['size'],
                                                     style: appstyle(
-                                                        18,
+                                                        14.sp,
                                                         sizes['isSelected']
                                                             ? Colors.white
                                                             : Colors.black,
                                                         FontWeight.w500),
                                                   ),
                                                   selectedColor: Colors.black,
-                                                  padding: const EdgeInsets
-                                                      .symmetric(vertical: 8),
                                                   selected: sizes['isSelected'],
                                                   onSelected: (newState) {
                                                     if (productNotifier.sizes

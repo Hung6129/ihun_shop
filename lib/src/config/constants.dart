@@ -10,6 +10,6 @@ List<dynamic> id = [];
 List pageList = [
   const HomePage(),
   const SearchPage(),
-  const FavoritePage(),
+  const FavoritePage(autoLeading: false,),
   const ProfilePage()
 ];
