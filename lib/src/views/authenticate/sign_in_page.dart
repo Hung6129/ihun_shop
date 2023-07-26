@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ihun_shop/src/config/flutter_toast.dart';
 import 'package:ihun_shop/src/config/widgets/authenticate_widgets.dart';
-import 'package:ihun_shop/src/controllers/sign_in_provider.dart';
+import 'package:ihun_shop/src/controllers/authen_provider.dart';
 
 import 'package:ihun_shop/src/views/main/main_screen.dart';
 import 'package:provider/provider.dart';

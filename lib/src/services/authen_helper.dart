@@ -99,13 +99,15 @@ class AuthenHelper {
     }
   }
 
-  void logOut() {
+  bool logOut() {
     try {
       Global.storageServices.remove(AppConstant.STORAGE_USER_TOKEN_KEY);
       Global.storageServices.remove(AppConstant.STORAGE_USER_PROFILE_KEY);
       Global.storageServices.setBool(AppConstant.STORAGE_USER_TOKEN_KEY, false);
+      return true;
     } catch (e) {
       toastInfor(text: e.toString());
+      return false;
     }
   }
 
