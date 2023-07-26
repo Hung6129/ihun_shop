@@ -20,16 +20,29 @@ class _SignInPageState extends State<SignInPage> {
   final TextEditingController _passwordController = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    final loginNotifier = Provider.of<SignInNotifier>(context);
+    final loginNotifier = Provider.of<AuthNotifier>(context);
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        leading: IconButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          icon: const Icon(
+            Icons.arrow_back_ios,
+            color: Colors.black,
+          ),
+        ),
+      ),
       body: SingleChildScrollView(
         child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 18.w, vertical: 100.h),
+          padding: EdgeInsets.symmetric(horizontal: 18.w),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              headerTitle('Welcome to', 'iHunECommerce'),
+              headerTitle('Welcome to', 'iHun Shop'),
               CusTextFeild(
                 onChange: (value) {
                   value = _emailController.text;
@@ -66,7 +79,7 @@ class _SignInPageState extends State<SignInPage> {
                 height: 10.h,
               ),
               const CusDivider(),
-              const CusAuthNav(authNavType: 'signIn', navTo: '/sign_up')
+              const CusAuthNav(authNavType: 'signIn', navTo: 'signUp')
             ],
           ),
         ),

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:ihun_shop/src/controllers/sign_in_provider.dart';
+import 'package:ihun_shop/src/controllers/authen_provider.dart';
 import 'package:provider/provider.dart';
 import 'src/controllers/favorites_provider.dart';
 import 'src/controllers/mainscreen_provider.dart';
@@ -18,7 +18,7 @@ void main() async {
         ChangeNotifierProvider(create: (context) => MainScreenNotifier()),
         ChangeNotifierProvider(create: (context) => ProductNotifier()),
         ChangeNotifierProvider(create: (context) => FavoritesNotifier()),
-        ChangeNotifierProvider(create: (context) => SignInNotifier()),
+        ChangeNotifierProvider(create: (context) => AuthNotifier()),
       ],
       child: const MyApp(),
     ),

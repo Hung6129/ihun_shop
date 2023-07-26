@@ -19,9 +19,24 @@ class _SignUpPageState extends State<SignUpPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        leading: IconButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          icon: const Icon(
+            Icons.arrow_back_ios,
+            color: Colors.black,
+          ),
+        ),
+      ),
       body: SingleChildScrollView(
         child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 18.w, vertical: 100.h),
+          padding: EdgeInsets.symmetric(
+            horizontal: 18.w,
+          ),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -57,7 +72,7 @@ class _SignUpPageState extends State<SignUpPage> {
                 ontap: () {},
               ),
               const CusDivider(),
-              const CusAuthNav(authNavType: 'signUp', navTo: '/')
+              const CusAuthNav(authNavType: 'signUp', navTo: 'signUp')
             ],
           ),
         ),

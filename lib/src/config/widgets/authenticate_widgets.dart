@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ihun_shop/src/config/styles/palettes.dart';
 import 'package:ihun_shop/src/config/styles/text_styles.dart';
+import 'package:ihun_shop/src/views/authenticate/sign_in_page.dart';
+import 'package:ihun_shop/src/views/authenticate/sign_up_page.dart';
 
 class CusAuthNav extends StatelessWidget {
   const CusAuthNav({
@@ -28,10 +30,15 @@ class CusAuthNav extends StatelessWidget {
           TextSpan(
             recognizer: TapGestureRecognizer()
               ..onTap = () {
-                Navigator.pushNamedAndRemoveUntil(
+                Navigator.push(
                   context,
-                  navTo,
-                  (route) => false,
+                  MaterialPageRoute(
+                    builder: (context) {
+                      return navTo == 'signIn'
+                          ? const SignInPage()
+                          : const SignUpPage();
+                    },
+                  ),
                 );
               },
             text: authNavType == 'signIn' ? ' Sign up here ' : ' Sign in here',
