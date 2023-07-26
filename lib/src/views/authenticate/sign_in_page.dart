@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:ihun_shop/src/config/flutter_toast.dart';
 import 'package:ihun_shop/src/config/widgets/authenticate_widgets.dart';
-import 'package:ihun_shop/src/services/authen_helper.dart';
+import 'package:ihun_shop/src/controllers/sign_in_provider.dart';
+
+import 'package:ihun_shop/src/views/main/main_screen.dart';
+import 'package:provider/provider.dart';
 
 class SignInPage extends StatefulWidget {
   const SignInPage({super.key});
@@ -16,6 +20,7 @@ class _SignInPageState extends State<SignInPage> {
   final TextEditingController _passwordController = TextEditingController();
   @override
   Widget build(BuildContext context) {
+    final loginNotifier = Provider.of<SignInNotifier>(context);
     return Scaffold(
       body: SingleChildScrollView(
         child: Padding(
@@ -42,15 +47,23 @@ class _SignInPageState extends State<SignInPage> {
                 iconData: Icons.lock,
                 txtfType: 'password',
               ),
-              actionBtn(() {
-                AuthenHelper().logInWithEmailAndPass(
+              actionBtn(() async {
+                final res = await loginNotifier.userLogIn(
                     _emailController.text, _passwordController.text);
+                if (res) {
+                  // ignore: use_build_context_synchronously
+                  Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const MainScreen(),
+                      ),
+                      (route) => false);
+                } else {
+                  toastInfor(text: "Login failed");
+                }
               }, 'signIn'),
               SizedBox(
                 height: 10.h,
-              ),
-              ForgotPassword(
-                ontap: () {},
               ),
               const CusDivider(),
               const CusAuthNav(authNavType: 'signIn', navTo: '/sign_up')

@@ -9,6 +9,14 @@ class StorageServices {
     return this;
   }
 
+  Future<bool> setBool(String key, bool value) async {
+    return await _preferences.setBool(key, value);
+  }
+
+  String getString(String key) {
+    return _preferences.getString(key) ?? '';
+  }
+
   Future<bool> setString(String key, String value) async {
     return await _preferences.setString(key, value);
   }
@@ -21,5 +29,9 @@ class StorageServices {
 
   Future<bool> remove(String userToken) {
     return _preferences.remove(userToken);
+  }
+
+  void clear() {
+    _preferences.clear();
   }
 }
