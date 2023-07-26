@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ihun_shop/src/config/styles/appstyle.dart';
 import 'package:ihun_shop/src/models/sneaker_model.dart';
-import 'package:ihun_shop/src/services/helper.dart';
+import 'package:ihun_shop/src/services/product_helper.dart';
 import 'package:ihun_shop/src/views/product/product_page.dart';
 import 'package:provider/provider.dart';
 
@@ -80,7 +80,7 @@ class _SearchPageState extends State<SearchPage> {
                   child: Text('Search for your favorite sneakers'),
                 )
               : FutureBuilder<List<Sneakers>>(
-                  future: Helper().searchingProducts(_controller.text),
+                  future: ProductHelper().searchingProducts(_controller.text),
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
                       return const Center(

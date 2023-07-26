@@ -3,8 +3,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 
 import 'package:ihun_shop/src/config/styles/appstyle.dart';
-import 'package:ihun_shop/src/models/sneaker_model.dart';
-import 'package:ihun_shop/src/services/helper.dart';
+import 'package:ihun_shop/src/controllers/product_provider.dart';
+import 'package:provider/provider.dart';
 
 import '../../config/widgets/category_btn.dart';
 import '../../config/widgets/custom_spacer.dart';
@@ -23,31 +23,6 @@ class _ProductByCatState extends State<ProductByCat>
     with TickerProviderStateMixin {
   late final TabController _tabController =
       TabController(length: 3, vsync: this);
-
-  late Future<List<Sneakers>> _male;
-  late Future<List<Sneakers>> _female;
-  late Future<List<Sneakers>> _kids;
-
-  void getMale() {
-    _male = Helper().getMaleSneakers();
-  }
-
-  void getFemale() {
-    _female = Helper().getFemaleSneakers();
-  }
-
-  void getkids() {
-    _kids = Helper().getKidsSneakers();
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    _tabController.animateTo(widget.tabIndex, curve: Curves.easeIn);
-    getMale();
-    getkids();
-    getFemale();
-  }
 
   @override
   void dispose() {
@@ -74,9 +49,11 @@ class _ProductByCatState extends State<ProductByCat>
               padding: const EdgeInsets.fromLTRB(16, 45, 0, 0),
               height: MediaQuery.of(context).size.height * 0.4,
               decoration: const BoxDecoration(
-                  image: DecorationImage(
-                      image: AssetImage("assets/images/top_image.png"),
-                      fit: BoxFit.fill)),
+                image: DecorationImage(
+                  image: AssetImage("assets/images/top_image.png"),
+                  fit: BoxFit.fill,
+                ),
+              ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -130,18 +107,20 @@ class _ProductByCatState extends State<ProductByCat>
                 ],
               ),
             ),
-            Padding(
-              padding: EdgeInsets.only(
-                  top: MediaQuery.of(context).size.height * 0.175,
-                  left: 16,
-                  right: 12),
-              child: ClipRRect(
-                borderRadius: const BorderRadius.all(Radius.circular(16)),
-                child: TabBarView(controller: _tabController, children: [
-                  LatestShoes(male: _male),
-                  LatestShoes(male: _female),
-                  LatestShoes(male: _kids),
-                ]),
+            Consumer<ProductNotifier>(
+              builder: (context, productNotifier, child) => Padding(
+                padding: EdgeInsets.only(
+                    top: MediaQuery.of(context).size.height * 0.175,
+                    left: 16,
+                    right: 12),
+                child: ClipRRect(
+                  borderRadius: const BorderRadius.all(Radius.circular(16)),
+                  child: TabBarView(controller: _tabController, children: [
+                    LatestShoes(male: productNotifier.getMale()),
+                    LatestShoes(male: productNotifier.getFemale()),
+                    LatestShoes(male: productNotifier.getkids()),
+                  ]),
+                ),
               ),
             )
           ],
