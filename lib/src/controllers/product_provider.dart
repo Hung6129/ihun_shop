@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ihun_shop/src/models/sneaker_model.dart';
-import 'package:ihun_shop/src/services/helper.dart';
+import 'package:ihun_shop/src/services/product_helper.dart';
 
 class ProductNotifier extends ChangeNotifier {
   int _activepage = 0;
@@ -42,17 +42,17 @@ class ProductNotifier extends ChangeNotifier {
   }
 
   Future<List<Sneakers>> getMale() async {
-    final male = await Helper().getMaleSneakers();
+    final male = await ProductHelper().getMaleSneakers();
     return male;
   }
 
   Future<List<Sneakers>> getFemale() async {
-    final female = await Helper().getFemaleSneakers();
+    final female = await ProductHelper().getFemaleSneakers();
     return female;
   }
 
   Future<List<Sneakers>> getkids() async {
-    final kids = await Helper().getKidsSneakers();
+    final kids = await ProductHelper().getKidsSneakers();
     return kids;
   }
 }
