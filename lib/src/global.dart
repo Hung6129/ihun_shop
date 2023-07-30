@@ -11,7 +11,6 @@ class Global {
     await Hive.initFlutter();
     await Hive.openBox('cart_box');
     await Hive.openBox('fav_box');
-
     storageServices = await StorageServices().init();
   }
 }

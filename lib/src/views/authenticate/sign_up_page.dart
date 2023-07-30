@@ -41,7 +41,7 @@ class _SignUpPageState extends State<SignUpPage> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              headerTitle('Sign up to enter', 'iHunEcommerce'),
+              headerTitle('Sign up to enter', 'iHun Shop'),
               CusTextFeild(
                   onChange: (value) {},
                   controller: _usernameController,
@@ -71,8 +71,6 @@ class _SignUpPageState extends State<SignUpPage> {
               ForgotPassword(
                 ontap: () {},
               ),
-              const CusDivider(),
-              const CusAuthNav(authNavType: 'signUp', navTo: 'signUp')
             ],
           ),
         ),
