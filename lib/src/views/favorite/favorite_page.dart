@@ -1,9 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:hive/hive.dart';
-import 'package:ihun_shop/src/config/constants.dart';
+
 import 'package:ihun_shop/src/config/styles/appstyle.dart';
+import 'package:ihun_shop/src/controllers/favorites_provider.dart';
+import 'package:provider/provider.dart';
 
 class FavoritePage extends StatefulWidget {
   const FavoritePage({super.key, required this.autoLeading});
@@ -13,26 +14,10 @@ class FavoritePage extends StatefulWidget {
 }
 
 class _FavoritePageState extends State<FavoritePage> {
-  final _favBox = Hive.box('fav_box');
-  List<dynamic> favList = [];
-  deleteItem(int key) async {
-    await _favBox.delete(key);
-  }
-
   @override
   Widget build(BuildContext context) {
-    final data = _favBox.keys.map((e) {
-      final item = _favBox.get(e);
-      return {
-        'key': e,
-        'id': item['id'],
-        'name': item['name'],
-        'category': item['category'],
-        'imageUrl': item['imageUrl'],
-        'price': item['price'],
-      };
-    }).toList();
-    favList = data.reversed.toList();
+    final favNotifier = Provider.of<FavoritesNotifier>(context);
+    favNotifier.getAllData();
     return Scaffold(
       appBar: AppBar(
         leading: widget.autoLeading
@@ -55,7 +40,7 @@ class _FavoritePageState extends State<FavoritePage> {
         elevation: 0,
         backgroundColor: Colors.transparent,
       ),
-      body: favList.isEmpty
+      body: favNotifier.fav.isEmpty
           ? Center(
               child: Text(
                 'No Favorite Yet',
@@ -69,7 +54,7 @@ class _FavoritePageState extends State<FavoritePage> {
           : SizedBox(
               height: MediaQuery.of(context).size.height,
               child: ListView.builder(
-                itemCount: favList.length,
+                itemCount: favNotifier.fav.length,
                 itemBuilder: (BuildContext context, int index) {
                   return ListTile(
                     contentPadding: const EdgeInsets.all(10),
@@ -77,28 +62,27 @@ class _FavoritePageState extends State<FavoritePage> {
                     leading: CachedNetworkImage(
                       height: 75.h,
                       width: 75.w,
-                      imageUrl: favList[index]['imageUrl'],
+                      imageUrl: favNotifier.fav[index]['imageUrl'],
                       fit: BoxFit.cover,
                     ),
                     title: Text(
-                      favList[index]['name'],
+                      favNotifier.fav[index]['name'],
                       style: appstyle(14.sp, Colors.black, FontWeight.w500),
                     ),
                     subtitle: Column(
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(favList[index]['category'].toString()),
-                        Text(favList[index]['price'].toString()),
+                        Text(favNotifier.fav[index]['category'].toString()),
+                        Text(favNotifier.fav[index]['price'].toString()),
                       ],
                     ),
                     trailing: IconButton(
                       icon: const Icon(Icons.delete),
                       onPressed: () {
-                        deleteItem(favList[index]['key']);
-                        id.removeWhere(
-                            (element) => element == favList[index]['id']);
-                        setState(() {});
+                        favNotifier
+                            .removeFromFav(favNotifier.fav[index]['key']);
+                        favNotifier.ids.remove(favNotifier.fav[index]['id']);
                       },
                     ),
                   );

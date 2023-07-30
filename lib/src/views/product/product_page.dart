@@ -39,21 +39,6 @@ class _ProductPageState extends State<ProductPage> {
     await _cartBox.add(newCart);
   }
 
-  final _favBox = Hive.box('fav_box');
-
-  getFavorites() {
-    final favProvider = Provider.of<FavoritesNotifier>(context, listen: false);
-    final favData = _favBox.keys.map((key) {
-      final value = _favBox.get(key);
-      return {
-        'key': key,
-        'id': value['id'],
-      };
-    }).toList();
-    favProvider.favorites = favData.toList();
-    favProvider.ids = favProvider.favorites.map((e) => e['id']).toList();
-  }
-
   @override
   Widget build(BuildContext context) {
     final favoriteNotifier = Provider.of<FavoritesNotifier>(context);

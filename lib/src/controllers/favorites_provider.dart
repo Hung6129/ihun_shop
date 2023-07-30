@@ -6,6 +6,8 @@ class FavoritesNotifier extends ChangeNotifier {
   List<dynamic> _ids = [];
   List<dynamic> _favorites = [];
 
+  List<dynamic> _fav = [];
+
   List<dynamic> get ids => _ids;
 
   set ids(List<dynamic> newIds) {
@@ -20,9 +22,32 @@ class FavoritesNotifier extends ChangeNotifier {
     notifyListeners();
   }
 
+  List<dynamic> get fav => _fav;
+
+  set fav(List<dynamic> newIds) {
+    _fav = newIds;
+    notifyListeners();
+  }
+
+  getAllData() {
+    final data = _favBox.keys.map((e) {
+      final item = _favBox.get(e);
+      return {
+        'key': e,
+        'id': item['id'],
+        'name': item['name'],
+        'category': item['category'],
+        'imageUrl': item['imageUrl'],
+        'price': item['price'],
+      };
+    }).toList();
+    _fav = data.reversed.toList();
+  }
+
   Future<void> addToFav(Map<String, dynamic> item) async {
     await _favBox.add(item);
     getFavorites();
+    notifyListeners();
   }
 
   getFavorites() {
@@ -35,5 +60,10 @@ class FavoritesNotifier extends ChangeNotifier {
     }).toList();
     _favorites = favData.toList();
     _ids = _favorites.map((e) => e['id']).toList();
+  }
+
+  Future<void> removeFromFav(int key) async {
+    await _favBox.delete(key);
+    notifyListeners();
   }
 }

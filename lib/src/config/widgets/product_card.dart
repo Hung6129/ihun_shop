@@ -73,7 +73,6 @@ class _ProductCardState extends State<ProductCard> {
                             "imageUrl": widget.sneaker.image[0],
                             "price": widget.sneaker.price,
                           });
-                          setState(() {});
                         }
                       },
                       child: favoriteNotifier.ids.contains(widget.sneaker.id)
