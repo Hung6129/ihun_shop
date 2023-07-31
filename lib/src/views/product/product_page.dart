@@ -366,18 +366,10 @@ class _ProductPageState extends State<ProductPage> {
             padding: const EdgeInsets.only(bottom: 20, left: 20, right: 20),
             child: CheckoutButton(
               onTap: () async {
-                _createCart({
-                  "id": widget.sneaker.id,
-                  "name": widget.sneaker.name,
-                  "category": widget.sneaker.category,
-                  "sizes": productNotifier.sizes[0],
-                  "imageUrl": widget.sneaker.image[0],
-                  "price": widget.sneaker.price,
-                  "qty": 1
-                });
-                print(widget.sneaker.name);
-                productNotifier.sizes.clear();
-                Navigator.pop(context);
+                if (authNotifier.isLoggedIn == true) {
+                } else {
+                  toastInfor(text: "Please login to add to cart");
+                }
               },
               label: "Add to Cart",
             ),

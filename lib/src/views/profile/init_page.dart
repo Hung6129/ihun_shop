@@ -1,7 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:ihun_shop/src/config/constants.dart';
+import 'package:ihun_shop/src/config/styles/text_styles.dart';
 import 'package:ihun_shop/src/controllers/authen_provider.dart';
+import 'package:ihun_shop/src/models/profile_model.dart';
+import 'package:ihun_shop/src/services/authen_helper.dart';
 import 'package:ihun_shop/src/views/authenticate/sign_in_page.dart';
 import 'package:ihun_shop/src/views/cart/cart_page.dart';
 import 'package:ihun_shop/src/views/favorite/favorite_page.dart';
@@ -20,31 +24,63 @@ class InitPage extends StatelessWidget {
                 SizedBox(
                   height: 80.h,
                 ),
-                Center(
-                  child: CircleAvatar(
-                    radius: 50.h,
-                  ),
+                CircleAvatar(
+                  radius: 50.h,
+                  backgroundImage:
+                      const NetworkImage(AppConstant.defaultImageProfile),
                 ),
-                const Padding(
-                  padding: EdgeInsets.all(8.0),
-                  child: Text(
-                    "User Name",
-                  ),
-                ),
-                const Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(Icons.location_on),
-                    Text("Location"),
-                  ],
+                FutureBuilder<Profile>(
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData) {
+                      final profile = snapshot.data;
+                      return Column(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              profile!.userName,
+                              style: TextStyles.defaultStyle.bold
+                                  .setTextSize(20.sp),
+                            ),
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              const Icon(Icons.location_on),
+                              SizedBox(
+                                width: 8.h,
+                              ),
+                              Text(profile.location),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 8.h,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              const Icon(Icons.email_rounded),
+                              SizedBox(
+                                width: 8.h,
+                              ),
+                              Text(profile.email),
+                            ],
+                          ),
+                        ],
+                      );
+                    }
+                    if (snapshot.hasError) {
+                      return const Text("Error");
+                    } else {
+                      return const Center(
+                        child: CircularProgressIndicator.adaptive(),
+                      );
+                    }
+                  },
+                  future: AuthenHelper().getProfile(),
                 ),
                 const SizedBox(
                   height: 20,
-                ),
-                const ListTile(
-                  leading: Icon(Icons.person),
-                  title: Text("Profile"),
-                  trailing: Icon(Icons.arrow_forward_ios),
                 ),
                 ListTile(
                   onTap: () {
