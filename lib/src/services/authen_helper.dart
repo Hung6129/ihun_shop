@@ -13,7 +13,9 @@ class AuthenHelper {
       if (email.isEmpty || password.isEmpty) {
         toastInfor(text: "Email or password is empty");
         return false;
-      } else if (!email.contains('@') || !email.contains('.')) {
+      } else if (!email.contains('@') ||
+          !email.contains('.') ||
+          email.length < 6) {
         toastInfor(text: "Email is invalid");
         return false;
       } else if (password.length < 6) {
@@ -38,14 +40,7 @@ class AuthenHelper {
             .setString(AppConstant.STORAGE_USER_TOKEN_KEY, jwtToken);
         Global.storageServices
             .setString(AppConstant.STORAGE_USER_PROFILE_KEY, idUser);
-        Global.storageServices
-            .setBool(AppConstant.STORAGE_USER_TOKEN_KEY, true);
-        // final token = Global.storageServices
-        //     .getString(AppConstant.STORAGE_USER_TOKEN_KEY);
-        // final id = Global.storageServices
-        //     .getString(AppConstant.STORAGE_USER_PROFILE_KEY);
-        // print(token);
-        // print(id);
+        Global.storageServices.setBool('isLogIn', true);
 
         toastInfor(text: "Login success");
         return true;
@@ -126,7 +121,7 @@ class AuthenHelper {
     if (response.statusCode == 200) {
       final data = response.data;
       final userPro = Profile.fromMap(data);
-      print(userPro);
+
       return userPro;
     } else {
       throw Exception("Failed to get profile");

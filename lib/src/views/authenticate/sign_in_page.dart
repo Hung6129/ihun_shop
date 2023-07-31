@@ -61,19 +61,24 @@ class _SignInPageState extends State<SignInPage> {
                 txtfType: 'password',
               ),
               actionBtn(() async {
-                final res = await loginNotifier.userLogIn(
-                    _emailController.text, _passwordController.text);
-                if (res) {
-                  // ignore: use_build_context_synchronously
-                  Navigator.pushAndRemoveUntil(
+                loginNotifier
+                    .logInWithEmailAndPass(
+                  _emailController.text,
+                  _passwordController.text,
+                )
+                    .then((response) {
+                  if (response) {
+                    Navigator.pushAndRemoveUntil(
                       context,
                       MaterialPageRoute(
                         builder: (context) => const MainScreen(),
                       ),
-                      (route) => false);
-                } else {
-                  toastInfor(text: "Login failed");
-                }
+                      (route) => false,
+                    );
+                  } else {
+                    toastInfor(text: 'Login failed');
+                  }
+                });
               }, 'signIn'),
               SizedBox(
                 height: 10.h,

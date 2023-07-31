@@ -13,19 +13,58 @@ class InitPage extends StatelessWidget {
     return authNotifier.getIsLoggedIn == true
         ? Scaffold(
             body: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                const Text(
-                  "You haven logged in",
-                  style: TextStyle(
-                      fontSize: 40,
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold),
+                SizedBox(
+                  height: 80.h,
                 ),
-                TextButton(
-                  onPressed: () {},
-                  child: const Text("Logout here"),
+                Center(
+                  child: CircleAvatar(
+                    radius: 50.h,
+                  ),
+                ),
+                const Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: Text(
+                    "User Name",
+                  ),
+                ),
+                const Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(Icons.location_on),
+                    Text("Location"),
+                  ],
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                const ListTile(
+                  leading: Icon(Icons.person),
+                  title: Text("Profile"),
+                  trailing: Icon(Icons.arrow_forward_ios),
+                ),
+                const ListTile(
+                  leading: Icon(Icons.shopping_cart),
+                  title: Text("My Order"),
+                  trailing: Icon(Icons.arrow_forward_ios),
+                ),
+                const ListTile(
+                  leading: Icon(Icons.settings),
+                  title: Text("Settings"),
+                  trailing: Icon(Icons.arrow_forward_ios),
+                ),
+                Divider(
+                  indent: 20.w,
+                  endIndent: 20.w,
+                  thickness: 2,
+                ),
+                ListTile(
+                  onTap: () {
+                    authNotifier.logOut();
+                  },
+                  leading: const Icon(Icons.logout),
+                  title: const Text("Log out"),
+                  trailing: const Icon(Icons.arrow_forward_ios),
                 )
               ],
             ),
@@ -37,7 +76,7 @@ class InitPage extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text(
-                    "You haven't logged in yet.\nPlease log in first",
+                    "You haven't logged in yet.",
                     style: TextStyle(
                         fontSize: 20.sp,
                         color: Colors.black,

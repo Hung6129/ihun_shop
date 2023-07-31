@@ -10,32 +10,59 @@ class AuthNotifier extends ChangeNotifier {
     notifyListeners();
   }
 
-  bool checkIsLoggedIn() {
-    final value = Global.storageServices.getIsSignedIn();
-    setIsLoggedIn = value;
-    return isLoggedIn;
+  bool loginResponse = false;
+  bool get getLoginResponse => loginResponse;
+  set setLoginResponse(bool value) {
+    loginResponse = value;
+    notifyListeners();
   }
 
-  bool isLoggedIn = false;
-  bool get getIsLoggedIn => isLoggedIn;
+  bool? isLoggedIn;
+  bool get getIsLoggedIn {
+    isLoggedIn = Global.storageServices.getBool('isLogIn');
+    return isLoggedIn ?? false;
+  }
+
   set setIsLoggedIn(bool value) {
     isLoggedIn = value;
     notifyListeners();
   }
 
-  Future<bool> userLogIn(String email, String password) async {
-    setIsProcessing = true;
-    bool res = await AuthenHelper().logInWithEmailAndPass(email, password);
-    setIsProcessing = false;
-    setIsLoggedIn = res;
-    return isLoggedIn;
+  bool responseBool = false;
+  bool get getResponseBool => responseBool;
+  set setResponseBool(bool value) {
+    responseBool = value;
+    notifyListeners();
   }
 
-  Future<bool> userLogOut() async {
+  Future<bool> logInWithEmailAndPass(String email, String password) async {
     setIsProcessing = true;
-    final res = AuthenHelper().logOut();
+    bool response = await AuthenHelper().logInWithEmailAndPass(email, password);
     setIsProcessing = false;
-    setIsLoggedIn = !res;
-    return isLoggedIn;
+    loginResponse = response;
+    return loginResponse;
+  }
+
+  Future<bool> signUpWithEmailAndPassword(
+    String userName,
+    String email,
+    String password,
+    String location,
+  ) async {
+    setIsProcessing = true;
+    bool response = await AuthenHelper().signUpWithEmailAndPassword(
+      userName,
+      email,
+      password,
+      location,
+    );
+    setIsProcessing = false;
+    responseBool = response;
+    return responseBool;
+  }
+
+  Future<void> logOut() async {
+    Global.storageServices.clear();
+    setIsLoggedIn = false;
   }
 }

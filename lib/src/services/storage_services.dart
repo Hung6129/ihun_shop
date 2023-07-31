@@ -12,6 +12,7 @@ class StorageServices {
   Future<bool> setBool(String key, bool value) async {
     return await _preferences.setBool(key, value);
   }
+  get getBool => _preferences.getBool;
 
   String getString(String key) {
     return _preferences.getString(key) ?? '';
