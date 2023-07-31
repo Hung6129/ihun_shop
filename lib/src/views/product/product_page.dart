@@ -4,9 +4,11 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:hive/hive.dart';
+import 'package:ihun_shop/src/config/flutter_toast.dart';
 
 import 'package:ihun_shop/src/config/styles/appstyle.dart';
 import 'package:ihun_shop/src/config/widgets/checkout_btn.dart';
+import 'package:ihun_shop/src/controllers/authen_provider.dart';
 import 'package:ihun_shop/src/controllers/product_provider.dart';
 import 'package:ihun_shop/src/models/sneaker_model.dart';
 import 'package:ihun_shop/src/views/favorite/favorite_page.dart';
@@ -42,6 +44,7 @@ class _ProductPageState extends State<ProductPage> {
   @override
   Widget build(BuildContext context) {
     final favoriteNotifier = Provider.of<FavoritesNotifier>(context);
+    final authNotifier = Provider.of<AuthNotifier>(context);
     favoriteNotifier.getFavorites();
     return Consumer<ProductNotifier>(
       builder: (context, productNotifier, child) {
@@ -69,25 +72,28 @@ class _ProductPageState extends State<ProductPage> {
                       ),
                       GestureDetector(
                         onTap: () {
-                          if (favoriteNotifier.ids
-                              .contains(widget.sneaker.id)) {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const FavoritePage(
-                                  autoLeading: true,
+                          if (authNotifier.isLoggedIn == true) {
+                            if (favoriteNotifier.ids
+                                .contains(widget.sneaker.id)) {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const FavoritePage(
+                                    autoLeading: true,
+                                  ),
                                 ),
-                              ),
-                            );
+                              );
+                            } else {
+                              favoriteNotifier.addToFav({
+                                "id": widget.sneaker.id,
+                                "name": widget.sneaker.name,
+                                "category": widget.sneaker.category,
+                                "imageUrl": widget.sneaker.image[0],
+                                "price": widget.sneaker.price,
+                              });
+                            }
                           } else {
-                            favoriteNotifier.addToFav({
-                              "id": widget.sneaker.id,
-                              "name": widget.sneaker.name,
-                              "category": widget.sneaker.category,
-                              "imageUrl": widget.sneaker.image[0],
-                              "price": widget.sneaker.price,
-                            });
-                            setState(() {});
+                            toastInfor(text: "Please login to add to favorite");
                           }
                         },
                         child: favoriteNotifier.ids.contains(widget.sneaker.id)

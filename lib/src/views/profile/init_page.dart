@@ -1,7 +1,10 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ihun_shop/src/controllers/authen_provider.dart';
 import 'package:ihun_shop/src/views/authenticate/sign_in_page.dart';
+import 'package:ihun_shop/src/views/cart/cart_page.dart';
+import 'package:ihun_shop/src/views/favorite/favorite_page.dart';
 import 'package:provider/provider.dart';
 
 class InitPage extends StatelessWidget {
@@ -43,10 +46,37 @@ class InitPage extends StatelessWidget {
                   title: Text("Profile"),
                   trailing: Icon(Icons.arrow_forward_ios),
                 ),
-                const ListTile(
-                  leading: Icon(Icons.shopping_cart),
-                  title: Text("My Order"),
-                  trailing: Icon(Icons.arrow_forward_ios),
+                ListTile(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) {
+                          return CartPage();
+                        },
+                      ),
+                    );
+                  },
+                  leading: const Icon(Icons.shopping_cart),
+                  title: const Text("My Order"),
+                  trailing: const Icon(Icons.arrow_forward_ios),
+                ),
+                ListTile(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) {
+                          return const FavoritePage(
+                            autoLeading: true,
+                          );
+                        },
+                      ),
+                    );
+                  },
+                  leading: const Icon(CupertinoIcons.square_favorites_alt_fill),
+                  title: const Text("My Favorite"),
+                  trailing: const Icon(Icons.arrow_forward_ios),
                 ),
                 const ListTile(
                   leading: Icon(Icons.settings),

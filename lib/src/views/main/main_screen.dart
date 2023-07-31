@@ -38,11 +38,6 @@ class MainScreen extends StatelessWidget {
                 label: 'Search',
               ),
               BottomNavigationBarItem(
-                activeIcon: Icon(CupertinoIcons.square_favorites_alt_fill),
-                icon: Icon(CupertinoIcons.square_favorites_alt),
-                label: 'Favorite',
-              ),
-              BottomNavigationBarItem(
                 activeIcon: Icon(CupertinoIcons.person_alt_circle_fill),
                 icon: Icon(CupertinoIcons.person_alt_circle),
                 label: 'Profile',
