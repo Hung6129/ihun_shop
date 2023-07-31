@@ -1,37 +1,34 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
-import 'package:hive/hive.dart';
+
 import 'package:ihun_shop/src/config/styles/appstyle.dart';
+import 'package:ihun_shop/src/config/styles/text_styles.dart';
+import 'package:ihun_shop/src/models/get_products.dart';
+import 'package:ihun_shop/src/services/cart_helper.dart';
 
 import '../../config/widgets/checkout_btn.dart';
 
-class CartPage extends StatelessWidget {
-  CartPage({super.key});
+class CartPage extends StatefulWidget {
+  const CartPage({super.key});
 
-  final _cartBox = Hive.box('cart_box');
+  @override
+  State<CartPage> createState() => _CartPageState();
+}
+
+class _CartPageState extends State<CartPage> {
+  late Future<List<Product>> cart;
+  @override
+  void initState() {
+    super.initState();
+    cart = CartHelper().getCart();
+  }
 
   @override
   Widget build(BuildContext context) {
-    List<dynamic> cart = [];
-    final cartData = _cartBox.keys.map((key) {
-      final item = _cartBox.get(key);
-      return {
-        "key": key,
-        "id": item['id'],
-        "category": item['category'],
-        "name": item['name'],
-        "imageUrl": item['imageUrl'],
-        "price": item['price'],
-        "qty": item['qty'],
-        "sizes": item['sizes']
-      };
-    }).toList();
-
-    cart = cartData.reversed.toList();
     return Scaffold(
-      backgroundColor: const Color(0xFFE2E2E2),
       body: Padding(
         padding: const EdgeInsets.all(12),
         child: Stack(
@@ -39,8 +36,8 @@ class CartPage extends StatelessWidget {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const SizedBox(
-                  height: 40,
+                SizedBox(
+                  height: 40.h,
                 ),
                 GestureDetector(
                   onTap: () {
@@ -51,6 +48,9 @@ class CartPage extends StatelessWidget {
                     color: Colors.black,
                   ),
                 ),
+                const SizedBox(
+                  height: 10,
+                ),
                 Text(
                   "My Cart",
                   style: appstyle(36, Colors.black, FontWeight.bold),
@@ -59,179 +59,84 @@ class CartPage extends StatelessWidget {
                   height: 20,
                 ),
                 SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.65,
-                  child: ListView.builder(
-                      itemCount: cart.length,
-                      padding: EdgeInsets.zero,
-                      itemBuilder: (context, index) {
-                        final data = cart[index];
-                        return Padding(
-                          padding: const EdgeInsets.all(8),
-                          child: ClipRRect(
-                            borderRadius:
-                                const BorderRadius.all(Radius.circular(12)),
-                            child: Slidable(
-                              key: const ValueKey(0),
-                              endActionPane: ActionPane(
-                                motion: const ScrollMotion(),
-                                children: [
-                                  SlidableAction(
-                                    flex: 1,
-                                    onPressed: doNothing,
-                                    backgroundColor: const Color(0xFF000000),
-                                    foregroundColor: Colors.white,
-                                    icon: Icons.delete,
-                                    label: 'Delete',
-                                  ),
-                                ],
-                              ),
-                              child: Container(
-                                height:
-                                    MediaQuery.of(context).size.height * 0.11,
-                                width: MediaQuery.of(context).size.width,
-                                decoration: BoxDecoration(
-                                    color: Colors.grey.shade100,
-                                    boxShadow: [
-                                      BoxShadow(
-                                          color: Colors.grey.shade500,
-                                          spreadRadius: 5,
-                                          blurRadius: 0.3,
-                                          offset: const Offset(0, 1)),
-                                    ]),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Row(
+                    height: MediaQuery.of(context).size.height * 0.65,
+                    child: FutureBuilder<List<Product>>(
+                      future: CartHelper().getCart(),
+                      builder: (context, snapshot) {
+                        if (snapshot.hasData) {
+                          final cart = snapshot.data as List<Product>;
+                          if (cart.isNotEmpty) {
+                            return ListView.builder(
+                                itemCount: cart.length,
+                                padding: EdgeInsets.zero,
+                                itemBuilder: (context, index) {
+                                  final data = cart[index];
+                                  return ListTile(
+                                    contentPadding: const EdgeInsets.all(10),
+                                    onTap: () {},
+                                    leading: CachedNetworkImage(
+                                      height: 75.h,
+                                      width: 75.w,
+                                      imageUrl: data.cartItem.imageUrl[0],
+                                      fit: BoxFit.cover,
+                                    ),
+                                    title: Text(
+                                      data.cartItem.name,
+                                      style: appstyle(
+                                          14.sp, Colors.black, FontWeight.w500),
+                                    ),
+                                    subtitle: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       children: [
-                                        Padding(
-                                          padding: const EdgeInsets.all(12),
-                                          child: CachedNetworkImage(
-                                            imageUrl: data['imageUrl'],
-                                            width: 70,
-                                            height: 70,
-                                            fit: BoxFit.fill,
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsets.only(
-                                              top: 12, left: 20),
-                                          child: Column(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.start,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Text(
-                                                data['name'],
-                                                style: appstyle(
-                                                    16,
-                                                    Colors.black,
-                                                    FontWeight.bold),
-                                              ),
-                                              const SizedBox(
-                                                height: 5,
-                                              ),
-                                              Text(
-                                                data['category'],
-                                                style: appstyle(14, Colors.grey,
-                                                    FontWeight.w600),
-                                              ),
-                                              const SizedBox(
-                                                height: 5,
-                                              ),
-                                              Row(
-                                                children: [
-                                                  Text(
-                                                    data['price'],
-                                                    style: appstyle(
-                                                        18,
-                                                        Colors.black,
-                                                        FontWeight.w600),
-                                                  ),
-                                                  const SizedBox(
-                                                    width: 40,
-                                                  ),
-                                                  Text(
-                                                    "Size",
-                                                    style: appstyle(
-                                                        18,
-                                                        Colors.grey,
-                                                        FontWeight.w600),
-                                                  ),
-                                                  const SizedBox(
-                                                    width: 15,
-                                                  ),
-                                                  Text(
-                                                    data['sizes'],
-                                                    style: appstyle(
-                                                        18,
-                                                        Colors.grey,
-                                                        FontWeight.w600),
-                                                  ),
-                                                ],
-                                              ),
-                                            ],
-                                          ),
-                                        )
+                                        Text(data.cartItem.category),
+                                        Text(data.cartItem.price),
                                       ],
                                     ),
-                                    Row(
+                                    trailing: Row(
+                                      mainAxisSize: MainAxisSize.min,
                                       children: [
-                                        Padding(
-                                          padding: const EdgeInsets.all(8.0),
-                                          child: Container(
-                                            decoration: const BoxDecoration(
-                                                color: Colors.white,
-                                                borderRadius: BorderRadius.all(
-                                                    Radius.circular(16))),
-                                            child: Column(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              children: [
-                                                InkWell(
-                                                    onTap: () {
-                                                      // cartProvider.increment();
-                                                    },
-                                                    child: const Icon(
-                                                      AntDesign.minussquare,
-                                                      size: 20,
-                                                      color: Colors.grey,
-                                                    )),
-                                                Text(
-                                                  data['qty'].toString(),
-                                                  style: appstyle(
-                                                    16,
-                                                    Colors.black,
-                                                    FontWeight.w600,
-                                                  ),
-                                                ),
-                                                InkWell(
-                                                    onTap: () {
-                                                      // cartProvider.decrement();
-                                                    },
-                                                    child: const Icon(
-                                                      AntDesign.plussquare,
-                                                      size: 20,
-                                                      color: Colors.black,
-                                                    )),
-                                              ],
-                                            ),
+                                        IconButton(
+                                          onPressed: () {},
+                                          icon: const Icon(
+                                            AntDesign.minus,
+                                            size: 20,
                                           ),
                                         ),
-
-                                        // ),
+                                        Text(
+                                          data.quantity.toString(),
+                                          style: TextStyles.defaultStyle.bold,
+                                        ),
+                                        IconButton(
+                                          onPressed: () {},
+                                          icon: const Icon(
+                                            AntDesign.plus,
+                                            size: 20,
+                                          ),
+                                        ),
                                       ],
-                                    )
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
-                        );
-                      }),
-                )
+                                    ),
+                                  );
+                                });
+                          } else {
+                            return const Center(
+                              child: Text("No item in cart"),
+                            );
+                          }
+                        }
+                        if (snapshot.hasError) {
+                          return const Center(
+                            child: Text("Error"),
+                          );
+                        } else {
+                          return const Center(
+                            child: CircularProgressIndicator.adaptive(),
+                          );
+                        }
+                      },
+                    ))
               ],
             ),
             const Align(

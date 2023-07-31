@@ -10,7 +10,9 @@ import 'package:ihun_shop/src/config/styles/appstyle.dart';
 import 'package:ihun_shop/src/config/widgets/checkout_btn.dart';
 import 'package:ihun_shop/src/controllers/authen_provider.dart';
 import 'package:ihun_shop/src/controllers/product_provider.dart';
+
 import 'package:ihun_shop/src/models/sneaker_model.dart';
+import 'package:ihun_shop/src/services/cart_helper.dart';
 import 'package:ihun_shop/src/views/favorite/favorite_page.dart';
 
 import 'package:provider/provider.dart';
@@ -367,6 +369,7 @@ class _ProductPageState extends State<ProductPage> {
             child: CheckoutButton(
               onTap: () async {
                 if (authNotifier.isLoggedIn == true) {
+                  CartHelper().addToCart(widget.sneaker.id, 1);
                 } else {
                   toastInfor(text: "Please login to add to cart");
                 }

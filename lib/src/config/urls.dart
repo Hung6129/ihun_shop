@@ -5,5 +5,6 @@ class AppUrls {
   static const String logIn = "/api/login";
   static const String signUp = "/api/register";
   static const String profile = "/api/users/";
-
+  static const String addToCart = "/api/cart/";
+  static const String getCart = "/api/cart/find/";
 }
