@@ -20,7 +20,7 @@ class _SignInPageState extends State<SignInPage> {
   final TextEditingController _passwordController = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    final loginNotifier = Provider.of<AuthNotifier>(context);
+    final authNotifier = Provider.of<AuthNotifier>(context);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -61,7 +61,7 @@ class _SignInPageState extends State<SignInPage> {
                 txtfType: 'password',
               ),
               actionBtn(() async {
-                loginNotifier
+                authNotifier
                     .logInWithEmailAndPass(
                   _emailController.text,
                   _passwordController.text,
