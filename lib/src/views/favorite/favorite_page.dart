@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:ihun_shop/src/config/styles/appstyle.dart';
+import 'package:ihun_shop/src/config/styles/text_styles.dart';
 import 'package:ihun_shop/src/controllers/favorites_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -33,8 +34,8 @@ class _FavoritePageState extends State<FavoritePage> {
             : null,
         automaticallyImplyLeading: widget.autoLeading,
         title: Text(
-          'My Favorites',
-          style: appstyle(18.sp, Colors.black, FontWeight.bold),
+          "My Favorites",
+          style: TextStyles.defaultStyle.appBarTitle,
         ),
         centerTitle: true,
         elevation: 0,

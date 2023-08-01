@@ -83,11 +83,16 @@ class _ProductCardState extends State<ProductCard> {
                           toastInfor(text: "Please login to add to favorite");
                         }
                       },
-                      child: favoriteNotifier.ids.contains(widget.sneaker.id)
-                          ? const Icon(
-                              AntDesign.heart,
-                              color: Colors.black,
-                            )
+                      child: authNotifier.isLoggedIn == true
+                          ? favoriteNotifier.ids.contains(widget.sneaker.id)
+                              ? const Icon(
+                                  AntDesign.heart,
+                                  color: Colors.black,
+                                )
+                              : const Icon(
+                                  AntDesign.hearto,
+                                  color: Colors.black,
+                                )
                           : const Icon(
                               AntDesign.hearto,
                               color: Colors.black,

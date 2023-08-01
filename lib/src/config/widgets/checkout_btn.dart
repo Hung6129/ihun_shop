@@ -7,9 +7,11 @@ class CheckoutButton extends StatelessWidget {
     super.key,
     this.onTap,
     required this.label,
+    required this.color,
   });
   final void Function()? onTap;
   final String label;
+  final Color color;
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +21,7 @@ class CheckoutButton extends StatelessWidget {
         padding: EdgeInsets.all(8.h),
         child: Container(
           decoration: BoxDecoration(
-              color: Colors.black,
+              color: color,
               borderRadius: BorderRadius.all(Radius.circular(12.h))),
           height: 50.h,
           width: MediaQuery.of(context).size.width * 0.9,

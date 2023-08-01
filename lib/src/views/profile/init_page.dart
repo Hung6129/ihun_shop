@@ -93,7 +93,10 @@ class InitPage extends StatelessWidget {
                       ),
                     );
                   },
-                  leading: const Icon(Icons.shopping_cart),
+                  leading: const Icon(
+                    Icons.shopping_bag,
+                    color: Colors.black,
+                  ),
                   title: const Text("My Order"),
                   trailing: const Icon(Icons.arrow_forward_ios),
                 ),
@@ -110,12 +113,13 @@ class InitPage extends StatelessWidget {
                       ),
                     );
                   },
-                  leading: const Icon(CupertinoIcons.square_favorites_alt_fill),
+                  leading: const Icon(CupertinoIcons.square_favorites_alt_fill,
+                      color: Colors.black),
                   title: const Text("My Favorite"),
                   trailing: const Icon(Icons.arrow_forward_ios),
                 ),
                 const ListTile(
-                  leading: Icon(Icons.settings),
+                  leading: Icon(Icons.settings, color: Colors.black),
                   title: Text("Settings"),
                   trailing: Icon(Icons.arrow_forward_ios),
                 ),
@@ -128,7 +132,7 @@ class InitPage extends StatelessWidget {
                   onTap: () {
                     authNotifier.logOut();
                   },
-                  leading: const Icon(Icons.logout),
+                  leading: const Icon(Icons.logout, color: Colors.black),
                   title: const Text("Log out"),
                   trailing: const Icon(Icons.arrow_forward_ios),
                 )

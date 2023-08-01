@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
-import 'package:hive/hive.dart';
+
 import 'package:ihun_shop/src/config/flutter_toast.dart';
 
 import 'package:ihun_shop/src/config/styles/appstyle.dart';
@@ -32,16 +32,11 @@ class ProductPage extends StatefulWidget {
   State<ProductPage> createState() => _ProductPageState();
 }
 
-class _ProductPageState extends State<ProductPage> {
+class _ProductPageState extends State<ProductPage>
+    with TickerProviderStateMixin {
   final PageController pageController = PageController();
 
-  final _cartBox = Hive.box('cart_box');
-
   int _current = 0;
-
-  Future<void> _createCart(Map<dynamic, dynamic> newCart) async {
-    await _cartBox.add(newCart);
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -98,16 +93,21 @@ class _ProductPageState extends State<ProductPage> {
                             toastInfor(text: "Please login to add to favorite");
                           }
                         },
-                        child: favoriteNotifier.ids.contains(widget.sneaker.id)
-                            ? const Icon(
-                                AntDesign.heart,
-                                color: Colors.black,
-                              )
+                        child: authNotifier.isLoggedIn == true
+                            ? favoriteNotifier.ids.contains(widget.sneaker.id)
+                                ? const Icon(
+                                    AntDesign.heart,
+                                    color: Colors.black,
+                                  )
+                                : const Icon(
+                                    AntDesign.hearto,
+                                    color: Colors.black,
+                                  )
                             : const Icon(
                                 AntDesign.hearto,
                                 color: Colors.black,
                               ),
-                      ),
+                      )
                     ],
                   ),
                 ),
@@ -228,29 +228,6 @@ class _ProductPageState extends State<ProductPage> {
                                         style: appstyle(
                                             26, Colors.black, FontWeight.w600),
                                       ),
-                                      Row(
-                                        children: [
-                                          Text(
-                                            "Colors",
-                                            style: appstyle(18, Colors.black,
-                                                FontWeight.w500),
-                                          ),
-                                          const SizedBox(
-                                            width: 5,
-                                          ),
-                                          const CircleAvatar(
-                                            radius: 7,
-                                            backgroundColor: Colors.black,
-                                          ),
-                                          const SizedBox(
-                                            width: 5,
-                                          ),
-                                          const CircleAvatar(
-                                            radius: 7,
-                                            backgroundColor: Colors.red,
-                                          )
-                                        ],
-                                      ),
                                     ],
                                   ),
                                   const SizedBox(
@@ -367,9 +344,16 @@ class _ProductPageState extends State<ProductPage> {
           bottomNavigationBar: Padding(
             padding: const EdgeInsets.only(bottom: 20, left: 20, right: 20),
             child: CheckoutButton(
+              color: Colors.black,
               onTap: () async {
                 if (authNotifier.isLoggedIn == true) {
-                  CartHelper().addToCart(widget.sneaker.id, 1);
+                  CartHelper().addToCart(widget.sneaker.id, 1).then((value) {
+                    if (value == true) {
+                      toastInfor(text: "Added to cart !!!");
+                    } else {
+                      toastInfor(text: "Failed to add to cart");
+                    }
+                  });
                 } else {
                   toastInfor(text: "Please login to add to cart");
                 }

@@ -5,11 +5,12 @@ import 'package:google_fonts/google_fonts.dart';
 
 import 'palettes.dart';
 
-
 extension ExtendedTextStyle on TextStyle {
-  TextStyle get appTitle => copyWith(fontSize: 25.sp, color: Palettes.p1);
+  TextStyle get appTitle =>
+      copyWith(fontSize: 25.sp, color: Palettes.textBlack);
 
-  TextStyle get appBarTitle => copyWith(fontSize: 22.sp, color: Palettes.p1);
+  TextStyle get appBarTitle => copyWith(
+      fontSize: 22.sp, color: Palettes.textBlack, fontWeight: FontWeight.bold);
 
   TextStyle get italic =>
       copyWith(fontWeight: FontWeight.normal, fontStyle: FontStyle.italic);
@@ -54,11 +55,11 @@ class TextStyles {
 
   static TextStyle defaultStyle = GoogleFonts.poppins(
     color: Palettes.textBlack,
-    letterSpacing: 0.75,
+    letterSpacing: 0.3,
   );
   static TextStyle customStyle = GoogleFonts.montserrat(
     color: Palettes.textBlack,
-    letterSpacing: 0.75,
+    letterSpacing: 0.3,
   );
 }
 

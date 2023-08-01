@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:ihun_shop/src/config/styles/appstyle.dart';
+import 'package:ihun_shop/src/config/styles/text_styles.dart';
 import 'package:ihun_shop/src/models/sneaker_model.dart';
 import 'package:ihun_shop/src/services/product_helper.dart';
 import 'package:ihun_shop/src/views/product/product_page.dart';
@@ -30,8 +30,8 @@ class _SearchPageState extends State<SearchPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Searching',
-          style: appstyle(18.sp, Colors.black, FontWeight.bold),
+          "Searching",
+          style: TextStyles.defaultStyle.appBarTitle,
         ),
         centerTitle: true,
         elevation: 0,
@@ -54,11 +54,7 @@ class _SearchPageState extends State<SearchPage> {
                   labelText: 'Find your favorite sneakers',
                   border: const OutlineInputBorder(),
                   focusColor: Colors.black,
-                  labelStyle: appstyle(
-                    12.sp,
-                    Colors.black,
-                    FontWeight.w400,
-                  ),
+                  labelStyle: TextStyles.defaultStyle,
                   focusedBorder: const OutlineInputBorder(
                     borderSide: BorderSide(color: Colors.black),
                   ),
@@ -77,7 +73,7 @@ class _SearchPageState extends State<SearchPage> {
           ),
           _controller.text.isEmpty
               ? const Center(
-                  child: Text('Search for your favorite sneakers'),
+                  child: Text('Type a sneaker name to search'),
                 )
               : FutureBuilder<List<Sneakers>>(
                   future: ProductHelper().searchingProducts(_controller.text),
@@ -93,7 +89,7 @@ class _SearchPageState extends State<SearchPage> {
                       return Center(
                         child: Text(
                           'No sneakers found',
-                          style: appstyle(16.sp, Colors.black, FontWeight.w400),
+                          style: TextStyles.defaultStyle.appTitle,
                         ),
                       );
                     } else {
@@ -124,21 +120,12 @@ class _SearchPageState extends State<SearchPage> {
                                     height: 75.h,
                                     fit: BoxFit.cover,
                                   ),
-                                  title: Text(
-                                    shoe.name,
-                                    style: appstyle(
-                                        16.sp, Colors.black, FontWeight.w400),
-                                  ),
-                                  subtitle: Text(
-                                    shoe.category,
-                                    style: appstyle(
-                                        14.sp, Colors.black, FontWeight.w400),
-                                  ),
-                                  trailing: Text(
-                                    shoe.price,
-                                    style: appstyle(
-                                        16.sp, Colors.black, FontWeight.w400),
-                                  ),
+                                  title: Text(shoe.name,
+                                      style: TextStyles.defaultStyle.bold),
+                                  subtitle: Text(shoe.category,
+                                      style: TextStyles.defaultStyle),
+                                  trailing: Text(shoe.price,
+                                      style: TextStyles.customStyle),
                                 ),
                               );
                             }),
