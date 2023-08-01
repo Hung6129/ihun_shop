@@ -1,15 +1,18 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
+import 'package:ihun_shop/src/config/flutter_toast.dart';
 
-import 'package:ihun_shop/src/config/styles/appstyle.dart';
 import 'package:ihun_shop/src/config/styles/text_styles.dart';
 import 'package:ihun_shop/src/models/get_products.dart';
 import 'package:ihun_shop/src/services/cart_helper.dart';
+import 'package:provider/provider.dart';
 
 import '../../config/widgets/checkout_btn.dart';
+import '../../controllers/cart_provider.dart';
 
 class CartPage extends StatefulWidget {
   const CartPage({super.key});
@@ -28,126 +31,156 @@ class _CartPageState extends State<CartPage> {
 
   @override
   Widget build(BuildContext context) {
+    final cartNotifier = Provider.of<CartNotifier>(context);
     return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          "Cart",
+          style: TextStyles.defaultStyle.appBarTitle,
+        ),
+        centerTitle: true,
+        elevation: 0,
+        backgroundColor: Colors.transparent,
+        automaticallyImplyLeading: false,
+        leading: IconButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          icon: const Icon(
+            CupertinoIcons.back,
+            color: Colors.black,
+          ),
+        ),
+      ),
       body: Padding(
         padding: const EdgeInsets.all(12),
-        child: Stack(
-          children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SizedBox(
-                  height: 40.h,
-                ),
-                GestureDetector(
-                  onTap: () {
-                    Navigator.pop(context);
-                  },
-                  child: const Icon(
-                    AntDesign.close,
-                    color: Colors.black,
-                  ),
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                Text(
-                  "My Cart",
-                  style: appstyle(36, Colors.black, FontWeight.bold),
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.65,
-                    child: FutureBuilder<List<Product>>(
-                      future: CartHelper().getCart(),
-                      builder: (context, snapshot) {
-                        if (snapshot.hasData) {
-                          final cart = snapshot.data as List<Product>;
-                          if (cart.isNotEmpty) {
-                            return ListView.builder(
-                                itemCount: cart.length,
-                                padding: EdgeInsets.zero,
-                                itemBuilder: (context, index) {
-                                  final data = cart[index];
-                                  return ListTile(
-                                    contentPadding: const EdgeInsets.all(10),
-                                    onTap: () {},
-                                    leading: CachedNetworkImage(
-                                      height: 75.h,
-                                      width: 75.w,
-                                      imageUrl: data.cartItem.imageUrl[0],
-                                      fit: BoxFit.cover,
-                                    ),
-                                    title: Text(
-                                      data.cartItem.name,
-                                      style: appstyle(
-                                          14.sp, Colors.black, FontWeight.w500),
-                                    ),
-                                    subtitle: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(data.cartItem.category),
-                                        Text(data.cartItem.price),
-                                      ],
-                                    ),
-                                    trailing: Row(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: [
-                                        IconButton(
-                                          onPressed: () {},
-                                          icon: const Icon(
-                                            AntDesign.minus,
-                                            size: 20,
-                                          ),
-                                        ),
-                                        Text(
-                                          data.quantity.toString(),
-                                          style: TextStyles.defaultStyle.bold,
-                                        ),
-                                        IconButton(
-                                          onPressed: () {},
-                                          icon: const Icon(
-                                            AntDesign.plus,
-                                            size: 20,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  );
-                                });
-                          } else {
-                            return const Center(
-                              child: Text("No item in cart"),
-                            );
-                          }
-                        }
-                        if (snapshot.hasError) {
-                          return const Center(
-                            child: Text("Error"),
-                          );
-                        } else {
-                          return const Center(
-                            child: CircularProgressIndicator.adaptive(),
-                          );
-                        }
+        child: FutureBuilder<List<Product>>(
+          future: CartHelper().getCart(),
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              final cart = snapshot.data as List<Product>;
+              if (cart.isNotEmpty) {
+                return ListView.builder(
+                  itemCount: cart.length,
+                  padding: EdgeInsets.zero,
+                  itemBuilder: (context, index) {
+                    final data = cart[index];
+                    return ListTile(
+                      contentPadding: EdgeInsets.all(10.h),
+                      onTap: () {
+                        cartNotifier.productIndex = index;
+                        cartNotifier.checkout.insert(0, data);
                       },
-                    ))
-              ],
-            ),
-            const Align(
-              alignment: Alignment.bottomCenter,
-              child: CheckoutButton(label: "Proceed to Checkout"),
-            ),
-          ],
+                      leading: Stack(
+                        children: [
+                          CachedNetworkImage(
+                              imageUrl: data.cartItem.imageUrl[0],
+                              width: 60.h,
+                              fit: BoxFit.cover,
+                              errorWidget: (context, url, error) => const Icon(
+                                    Icons.error,
+                                    color: Colors.red,
+                                  ),
+                              placeholder: (context, url) => const Center(
+                                    child: CircularProgressIndicator.adaptive(),
+                                  )),
+                          Positioned(
+                            left: 0,
+                            top: 0,
+                            child: Icon(
+                              cartNotifier.productIndex == index
+                                  ? Feather.check_square
+                                  : Feather.square,
+                              color: cartNotifier.productIndex == index
+                                  ? Colors.black
+                                  : Colors.black.withOpacity(0.3),
+                            ),
+                          ),
+                        ],
+                      ),
+                      title: Text(
+                        data.cartItem.name,
+                        style: TextStyles.defaultStyle.bold.setTextSize(14.sp),
+                      ),
+                      subtitle: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            data.cartItem.category,
+                            style: TextStyles.defaultStyle.setTextSize(12.sp),
+                          ),
+                          Text(
+                            data.cartItem.price,
+                            style: TextStyles.defaultStyle.setTextSize(12.sp),
+                          ),
+                        ],
+                      ),
+                      trailing: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          IconButton(
+                            onPressed: () {},
+                            icon: const Icon(
+                              AntDesign.minus,
+                              size: 20,
+                            ),
+                          ),
+                          Text(
+                            data.quantity.toString(),
+                            style: TextStyles.defaultStyle.bold,
+                          ),
+                          IconButton(
+                            onPressed: () {},
+                            icon: const Icon(
+                              AntDesign.plus,
+                              size: 20,
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
+                  },
+                );
+              } else {
+                return const Center(
+                  child: Text("No item in cart"),
+                );
+              }
+            }
+            if (snapshot.hasError) {
+              return const Center(
+                child: Text("Error"),
+              );
+            }
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(
+                child: CircularProgressIndicator.adaptive(),
+              );
+            } else {
+              return const Center(
+                child: Text("Something went wrong"),
+              );
+            }
+          },
         ),
+      ),
+      bottomSheet: Container(
+        padding: EdgeInsets.all(10.h),
+        height: 100,
+        child: cartNotifier.checkout.isNotEmpty
+            ? CheckoutButton(
+                onTap: () {},
+                label: "Proceed to Checkout",
+                color: Colors.black,
+              )
+            : CheckoutButton(
+                onTap: () {
+                  toastInfor(text: "No item in cart");
+                },
+                label: "Proceed to Checkout",
+                color: Colors.black.withOpacity(0.5)),
       ),
     );
   }
-
-  void doNothing(BuildContext context) {}
 }

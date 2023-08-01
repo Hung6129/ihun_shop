@@ -65,4 +65,26 @@ class CartHelper {
       throw Exception(e);
     }
   }
+
+  Future<bool> deleteItem(String id) async {
+    final tokenUser =
+        Global.storageServices.getString(AppConstant.STORAGE_USER_TOKEN_KEY);
+    Map<String, String> headers = {
+      "Content-Type": "application/json",
+      "token": "Bearer $tokenUser"
+    };
+    try {
+      final response = await dio.delete(
+        AppUrls.baseUrl + AppUrls.addToCart + id,
+        options: Options(headers: headers),
+      );
+      if (response.statusCode == 200) {
+        return true;
+      } else {
+        return false;
+      }
+    } catch (e) {
+      throw Exception(e);
+    }
+  }
 }

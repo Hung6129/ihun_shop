@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:ihun_shop/src/config/styles/text_styles.dart';
 import 'package:ihun_shop/src/controllers/authen_provider.dart';
 import 'package:ihun_shop/src/controllers/product_provider.dart';
 
 import 'package:provider/provider.dart';
 
 import '../../config/widgets/home_widget.dart';
-
-import '../../config/styles/appstyle.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -24,80 +23,63 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     final authNotifier = Provider.of<AuthNotifier>(context);
     authNotifier.getIsLoggedIn;
-    return Scaffold(
-      backgroundColor: Colors.white,
-      body: SingleChildScrollView(
-        child: SizedBox(
-          height: MediaQuery.of(context).size.height,
-          child: Stack(
+    return DefaultTabController(
+      length: 3,
+      child: Scaffold(
+        backgroundColor: Colors.white,
+        appBar: AppBar(
+          centerTitle: false,
+          elevation: 0,
+          backgroundColor: Colors.transparent,
+          toolbarHeight: 100.h,
+          title: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(
-                padding: const EdgeInsets.fromLTRB(16, 45, 0, 0),
-                height: MediaQuery.of(context).size.height * 0.4,
-                child: Container(
-                  padding: EdgeInsets.only(left: 8.w, bottom: 15.h),
-                  width: MediaQuery.of(context).size.width,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "Athletics Shoes",
-                        style: appstyleWithHt(
-                            35.sp, Colors.black, FontWeight.bold, 1.5),
-                      ),
-                      Text(
-                        "Collection",
-                        style: appstyleWithHt(
-                            35.sp, Colors.black, FontWeight.bold, 1.2),
-                      ),
-                      TabBar(
-                        padding: EdgeInsets.zero,
-                        indicatorSize: TabBarIndicatorSize.label,
-                        indicatorColor: Colors.transparent,
-                        controller: _tabController,
-                        isScrollable: true,
-                        labelColor: Colors.black,
-                        labelStyle: appstyle(24, Colors.black, FontWeight.bold),
-                        unselectedLabelColor: Colors.grey.withOpacity(0.3),
-                        tabs: const [
-                          Tab(
-                            text: "Men Shoes",
-                          ),
-                          Tab(
-                            text: "Women Shoes",
-                          ),
-                          Tab(
-                            text: "Kids Shoes",
-                          )
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
+              Text("Athletics Shoes", style: TextStyles.defaultStyle.appTitle),
+              Text("Collection", style: TextStyles.customStyle.appTitle),
+            ],
+          ),
+          bottom: TabBar(
+            controller: _tabController,
+            indicatorColor: Colors.black,
+            indicatorSize: TabBarIndicatorSize.label,
+            tabs: [
+              Tab(
+                child: Text("Men", style: TextStyles.customStyle.appBarTitle),
               ),
-              Consumer<ProductNotifier>(
-                builder: (context, productNotifier, child) => Padding(
-                  padding: EdgeInsets.only(top: 180.h),
-                  child: Container(
-                    padding: EdgeInsets.only(left: 10.w),
-                    child: TabBarView(controller: _tabController, children: [
-                      HomeWidget(
-                        male: productNotifier.getMale(),
-                        tabIndex: 0,
-                      ),
-                      HomeWidget(
-                        male: productNotifier.getFemale(),
-                        tabIndex: 1,
-                      ),
-                      HomeWidget(
-                        male: productNotifier.getkids(),
-                        tabIndex: 2,
-                      ),
-                    ]),
-                  ),
-                ),
+              Tab(
+                child: Text("Women", style: TextStyles.customStyle.appBarTitle),
+              ),
+              Tab(
+                child: Text("Kid", style: TextStyles.customStyle.appBarTitle),
               )
             ],
+          ),
+        ),
+        body: SingleChildScrollView(
+          child: Consumer<ProductNotifier>(
+            builder: (context, productNotifier, child) => Container(
+              padding: EdgeInsets.only(left: 10.w, top: 20.h),
+              height: MediaQuery.of(context).size.height,
+              width: MediaQuery.of(context).size.width,
+              child: TabBarView(
+                controller: _tabController,
+                children: [
+                  HomeWidget(
+                    male: productNotifier.getMale(),
+                    tabIndex: 0,
+                  ),
+                  HomeWidget(
+                    male: productNotifier.getFemale(),
+                    tabIndex: 1,
+                  ),
+                  HomeWidget(
+                    male: productNotifier.getkids(),
+                    tabIndex: 2,
+                  ),
+                ],
+              ),
+            ),
           ),
         ),
       ),
