@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 
-import 'package:ihun_shop/src/config/styles/appstyle.dart';
 import 'package:ihun_shop/src/controllers/product_provider.dart';
 import 'package:ihun_shop/src/models/sneaker_model.dart';
 import 'package:ihun_shop/src/views/product/product_page.dart';
 
 import 'package:provider/provider.dart';
 import '../../views/product/product_by_cat.dart';
+import '../styles/text_styles.dart';
 import 'new_shoes.dart';
 import 'product_card.dart';
 
@@ -28,7 +28,7 @@ class HomeWidget extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         SizedBox(
-            height: 300.h,
+            height: 250.h,
             child: FutureBuilder<List<Sneakers>>(
                 future: _male,
                 builder: (context, snapshot) {
@@ -70,7 +70,7 @@ class HomeWidget extends StatelessWidget {
                 children: [
                   Text(
                     "Latest Shoes",
-                    style: appstyle(24, Colors.black, FontWeight.bold),
+                    style: TextStyles.customStyle.bold.appBarTitle,
                   ),
                   GestureDetector(
                     onTap: () {
@@ -80,15 +80,13 @@ class HomeWidget extends StatelessWidget {
                           builder: (context) => ProductByCat(
                             tabIndex: tabIndex,
                           ),
+                          fullscreenDialog: true,
                         ),
                       );
                     },
                     child: Row(
                       children: [
-                        Text(
-                          "Show All",
-                          style: appstyle(22, Colors.black, FontWeight.w500),
-                        ),
+                        Text("Show All", style: TextStyles.customStyle.bold),
                         const Icon(
                           AntDesign.caretright,
                           size: 20,

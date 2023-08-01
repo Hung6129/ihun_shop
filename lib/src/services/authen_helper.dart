@@ -2,7 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:ihun_shop/src/config/constants.dart';
 import 'package:ihun_shop/src/config/flutter_toast.dart';
 import 'package:ihun_shop/src/config/urls.dart';
-import 'package:ihun_shop/src/global.dart';
+import 'package:ihun_shop/src/config/global.dart';
 import 'package:ihun_shop/src/models/profile_model.dart';
 
 class AuthenHelper {

@@ -1,7 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:ihun_shop/src/config/styles/appstyle.dart';
+
+import 'package:ihun_shop/src/config/styles/text_styles.dart';
 
 class StaggerTile extends StatefulWidget {
   const StaggerTile({
@@ -44,16 +45,9 @@ class _StaggerTileState extends State<StaggerTile> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    widget.name,
-                    style:
-                        appstyleWithHt(15.sp, Colors.black, FontWeight.w700, 1),
-                  ),
-                  Text(
-                    widget.price,
-                    style:
-                        appstyleWithHt(15.sp, Colors.black, FontWeight.w500, 1),
-                  )
+                  Text(widget.name,
+                      style: TextStyles.defaultStyle.bold.setTextSize(16.sp)),
+                  Text(widget.price, style: TextStyles.defaultStyle.mediumText)
                 ],
               ),
             )

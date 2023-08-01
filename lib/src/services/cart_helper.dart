@@ -5,7 +5,7 @@ import 'package:ihun_shop/src/models/get_products.dart';
 
 import '../config/constants.dart';
 import '../config/urls.dart';
-import '../global.dart';
+import '../config/global.dart';
 
 class CartHelper {
   Dio dio = Dio();

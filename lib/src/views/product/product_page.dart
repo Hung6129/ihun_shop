@@ -6,7 +6,6 @@ import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 
 import 'package:ihun_shop/src/config/flutter_toast.dart';
 
-import 'package:ihun_shop/src/config/styles/appstyle.dart';
 import 'package:ihun_shop/src/config/widgets/checkout_btn.dart';
 import 'package:ihun_shop/src/controllers/authen_provider.dart';
 import 'package:ihun_shop/src/controllers/product_provider.dart';
@@ -18,6 +17,7 @@ import 'package:ihun_shop/src/views/favorite/favorite_page.dart';
 import 'package:provider/provider.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 
+import '../../config/styles/text_styles.dart';
 import '../../controllers/favorites_provider.dart';
 
 // ignore: must_be_immutable
@@ -185,15 +185,15 @@ class _ProductPageState extends State<ProductPage>
                                 children: [
                                   Text(
                                     widget.sneaker.name,
-                                    style: appstyle(
-                                        30.sp, Colors.black, FontWeight.bold),
+                                    style: TextStyles.defaultStyle.bold
+                                        .setTextSize(25.sp),
                                   ),
                                   Row(
                                     children: [
                                       Text(
                                         widget.sneaker.category,
-                                        style: appstyle(
-                                            20, Colors.grey, FontWeight.w500),
+                                        style: TextStyles
+                                            .defaultStyle.mediumText.greyText,
                                       ),
                                       const SizedBox(
                                         width: 20,
@@ -225,8 +225,8 @@ class _ProductPageState extends State<ProductPage>
                                     children: [
                                       Text(
                                         widget.sneaker.price,
-                                        style: appstyle(
-                                            26, Colors.black, FontWeight.w600),
+                                        style: TextStyles.customStyle
+                                            .setTextSize(20.sp),
                                       ),
                                     ],
                                   ),
@@ -239,16 +239,16 @@ class _ProductPageState extends State<ProductPage>
                                         children: [
                                           Text(
                                             "Select sizes",
-                                            style: appstyle(20, Colors.black,
-                                                FontWeight.w600),
+                                            style: TextStyles.defaultStyle.bold
+                                                .setTextSize(16.sp),
                                           ),
                                           const SizedBox(
                                             width: 20,
                                           ),
                                           Text(
                                             "View size guide",
-                                            style: appstyle(20, Colors.grey,
-                                                FontWeight.w600),
+                                            style: TextStyles.defaultStyle.bold
+                                                .setTextSize(16.sp),
                                           ),
                                         ],
                                       ),
@@ -273,12 +273,13 @@ class _ProductPageState extends State<ProductPage>
                                                   disabledColor: Colors.white,
                                                   label: Text(
                                                     sizes['size'],
-                                                    style: appstyle(
-                                                        14.sp,
-                                                        sizes['isSelected']
-                                                            ? Colors.white
-                                                            : Colors.black,
-                                                        FontWeight.w500),
+                                                    style: TextStyles
+                                                        .customStyle.bold
+                                                        .setColor(
+                                                      sizes['isSelected']
+                                                          ? Colors.white
+                                                          : Colors.black,
+                                                    ),
                                                   ),
                                                   selectedColor: Colors.black,
                                                   selected: sizes['isSelected'],
@@ -316,15 +317,15 @@ class _ProductPageState extends State<ProductPage>
                                     widget.sneaker.title,
                                     maxLines: 2,
                                     overflow: TextOverflow.ellipsis,
-                                    style: appstyle(
-                                        14.sp, Colors.black, FontWeight.w700),
+                                    style: TextStyles.customStyle
+                                        .setTextSize(14.sp),
                                   ),
                                   Text(
                                     widget.sneaker.description,
                                     textAlign: TextAlign.justify,
                                     maxLines: 4,
-                                    style: appstyle(
-                                        14, Colors.black, FontWeight.normal),
+                                    style: TextStyles.customStyle
+                                        .setTextSize(14.sp),
                                   ),
                                   const SizedBox(
                                     height: 10,

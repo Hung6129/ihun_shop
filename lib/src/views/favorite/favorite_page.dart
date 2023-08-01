@@ -2,7 +2,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import 'package:ihun_shop/src/config/styles/appstyle.dart';
 import 'package:ihun_shop/src/config/styles/text_styles.dart';
 import 'package:ihun_shop/src/controllers/favorites_provider.dart';
 import 'package:provider/provider.dart';
@@ -45,11 +44,7 @@ class _FavoritePageState extends State<FavoritePage> {
           ? Center(
               child: Text(
                 'No Favorite Yet',
-                style: appstyle(
-                  18.sp,
-                  Colors.black,
-                  FontWeight.bold,
-                ),
+                style: TextStyles.defaultStyle.appTitle,
               ),
             )
           : SizedBox(
@@ -68,14 +63,20 @@ class _FavoritePageState extends State<FavoritePage> {
                     ),
                     title: Text(
                       favNotifier.fav[index]['name'],
-                      style: appstyle(14.sp, Colors.black, FontWeight.w500),
+                      style: TextStyles.defaultStyle.bold,
                     ),
                     subtitle: Column(
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(favNotifier.fav[index]['category'].toString()),
-                        Text(favNotifier.fav[index]['price'].toString()),
+                        Text(
+                          favNotifier.fav[index]['category'],
+                          style: TextStyles.defaultStyle,
+                        ),
+                        Text(
+                          favNotifier.fav[index]['price'].toString(),
+                          style: TextStyles.defaultStyle,
+                        ),
                       ],
                     ),
                     trailing: IconButton(

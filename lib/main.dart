@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:ihun_shop/src/ihun_shop.dart';
 
-import 'src/global.dart';
+import 'src/config/global.dart';
 
 // entrypoint of the app
 void main() async {

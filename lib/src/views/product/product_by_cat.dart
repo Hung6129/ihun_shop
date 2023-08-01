@@ -41,57 +41,45 @@ class _ProductByCatState extends State<ProductByCat>
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFFE2E2E2),
+      appBar: AppBar(
+        centerTitle: true,
+        elevation: 0,
+        backgroundColor: Colors.transparent,
+        leading: GestureDetector(
+          onTap: () {
+            Navigator.pop(context);
+          },
+          child: const Icon(
+            AntDesign.close,
+            color: Colors.black,
+          ),
+        ),
+      ),
       body: SizedBox(
         height: MediaQuery.of(context).size.height,
         child: Stack(
           children: [
             Container(
-              padding: const EdgeInsets.fromLTRB(16, 45, 0, 0),
+              padding: const EdgeInsets.fromLTRB(16, 0, 0, 0),
               height: MediaQuery.of(context).size.height * 0.4,
               decoration: const BoxDecoration(
                 image: DecorationImage(
-                  image: AssetImage("assets/images/top_image.png"),
+                  image: AssetImage("assets/images/nike.png"),
                   fit: BoxFit.fill,
                 ),
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(6, 12, 16, 18),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        GestureDetector(
-                          onTap: () {
-                            Navigator.pop(context);
-                          },
-                          child: const Icon(
-                            AntDesign.close,
-                            color: Colors.white,
-                          ),
-                        ),
-                        GestureDetector(
-                          onTap: () {
-                            filter();
-                          },
-                          child: const Icon(
-                            FontAwesome.sliders,
-                            color: Colors.white,
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
                   TabBar(
                     padding: EdgeInsets.zero,
                     indicatorSize: TabBarIndicatorSize.label,
                     indicatorColor: Colors.transparent,
                     controller: _tabController,
                     isScrollable: true,
-                    labelColor: Colors.white,
+                    labelColor: Colors.black,
                     labelStyle: appstyle(24, Colors.white, FontWeight.bold),
-                    unselectedLabelColor: Colors.grey.withOpacity(0.3),
+                    unselectedLabelColor: Colors.black.withOpacity(0.3),
                     tabs: const [
                       Tab(
                         text: "Men Shoes",
@@ -109,10 +97,7 @@ class _ProductByCatState extends State<ProductByCat>
             ),
             Consumer<ProductNotifier>(
               builder: (context, productNotifier, child) => Padding(
-                padding: EdgeInsets.only(
-                    top: MediaQuery.of(context).size.height * 0.175,
-                    left: 16,
-                    right: 12),
+                padding: EdgeInsets.only(top: 50.h, left: 16, right: 12),
                 child: ClipRRect(
                   borderRadius: const BorderRadius.all(Radius.circular(16)),
                   child: TabBarView(controller: _tabController, children: [

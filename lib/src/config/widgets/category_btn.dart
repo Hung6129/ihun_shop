@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:ihun_shop/src/config/styles/appstyle.dart';
+import 'package:ihun_shop/src/config/styles/text_styles.dart';
 
 class CategoryBtn extends StatelessWidget {
   const CategoryBtn(
@@ -21,28 +21,8 @@ class CategoryBtn extends StatelessWidget {
       ),
       child: Text(
         label,
-        style: appstyle(14.sp, buttonClr, FontWeight.w600),
+        style: TextStyles.customStyle.bold.setColor(buttonClr),
       ),
-    )
-        // Container(
-        //   height: 45.h,
-        //   padding: EdgeInsets.symmetric(horizontal: 10.w),
-        //   decoration: BoxDecoration(
-        //       border: Border.all(
-        //         width: 1,
-        //         color: buttonClr,
-        //         style: BorderStyle.solid,
-        //       ),
-        //       borderRadius: BorderRadius.all(Radius.circular(9.h))),
-        //   child: Center(
-        //     child: Text(
-        //       label,
-        //       overflow: TextOverflow.ellipsis,
-        //       maxLines: 1,
-        //       style: appstyle(14.sp, buttonClr, FontWeight.w600),
-        //     ),
-        //   ),
-        // )
-        ;
+    );
   }
 }

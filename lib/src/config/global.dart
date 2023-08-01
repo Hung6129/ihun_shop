@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:hive_flutter/hive_flutter.dart';
 
-import 'services/storage_services.dart';
+import '../services/storage_services.dart';
 
 class Global {
   static late StorageServices storageServices;

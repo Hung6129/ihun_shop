@@ -59,8 +59,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
         body: SingleChildScrollView(
           child: Consumer<ProductNotifier>(
             builder: (context, productNotifier, child) => Container(
-              padding: EdgeInsets.only(left: 10.w, top: 20.h),
-              height: MediaQuery.of(context).size.height,
+              padding: EdgeInsets.only(left: 10.w, top: 30.h),
+              height: MediaQuery.of(context).size.height - 150,
               width: MediaQuery.of(context).size.width,
               child: TabBarView(
                 controller: _tabController,

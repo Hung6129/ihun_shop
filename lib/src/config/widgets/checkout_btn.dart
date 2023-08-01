@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:ihun_shop/src/config/styles/appstyle.dart';
+
+import '../styles/text_styles.dart';
 
 class CheckoutButton extends StatelessWidget {
   const CheckoutButton({
@@ -28,7 +29,7 @@ class CheckoutButton extends StatelessWidget {
           child: Center(
             child: Text(
               label,
-              style: appstyle(18.sp, Colors.white, FontWeight.bold),
+              style: TextStyles.customStyle.bold.whiteText,
             ),
           ),
         ),

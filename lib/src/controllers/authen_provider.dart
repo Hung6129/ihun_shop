@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:ihun_shop/src/global.dart';
+import 'package:ihun_shop/src/config/global.dart';
 import 'package:ihun_shop/src/services/authen_helper.dart';
 
 class AuthNotifier extends ChangeNotifier {

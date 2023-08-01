@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:ihun_shop/src/config/flutter_toast.dart';
 
-import 'package:ihun_shop/src/config/styles/appstyle.dart';
+import 'package:ihun_shop/src/config/styles/text_styles.dart';
 import 'package:ihun_shop/src/controllers/authen_provider.dart';
 
 import 'package:ihun_shop/src/models/sneaker_model.dart';
@@ -46,7 +46,7 @@ class _ProductCardState extends State<ProductCard> {
               Stack(
                 children: [
                   Container(
-                    height: MediaQuery.of(context).size.height * 0.23,
+                    height: MediaQuery.of(context).size.height * 0.2,
                     decoration: BoxDecoration(
                       image: DecorationImage(
                         image: NetworkImage(widget.sneaker.image[0]),
@@ -110,17 +110,11 @@ class _ProductCardState extends State<ProductCard> {
                       widget.sneaker.name,
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
-                      style: appstyleWithHt(
-                        25.sp,
-                        Colors.black,
-                        FontWeight.bold,
-                        1.1,
-                      ),
+                      style: TextStyles.customStyle.bold.setTextSize(16.sp),
                     ),
                     Text(
                       widget.sneaker.category,
-                      style: appstyleWithHt(
-                          15.sp, Colors.grey, FontWeight.bold, 1.5),
+                      style: TextStyles.customStyle.setTextSize(12.sp),
                     )
                   ],
                 ),
@@ -132,13 +126,13 @@ class _ProductCardState extends State<ProductCard> {
                   children: [
                     Text(
                       widget.sneaker.price,
-                      style: appstyle(20.sp, Colors.black, FontWeight.w600),
+                      style: TextStyles.defaultStyle.bold.setTextSize(16.sp),
                     ),
                     Row(
                       children: [
                         Text(
                           "Colors",
-                          style: appstyle(15.sp, Colors.grey, FontWeight.w500),
+                          style: TextStyles.customStyle.setTextSize(16.sp),
                         ),
                         const SizedBox(
                           width: 5,
