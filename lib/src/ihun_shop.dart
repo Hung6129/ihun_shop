@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ihun_shop/src/controllers/mainscreen_provider.dart';
+import 'package:ihun_shop/src/controllers/payment_controller.dart';
 import 'package:ihun_shop/src/controllers/product_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -39,6 +40,7 @@ final iHunShopEnter = MultiProvider(
     ChangeNotifierProvider(create: (context) => FavoritesNotifier()),
     ChangeNotifierProvider(create: (context) => AuthNotifier()),
     ChangeNotifierProvider(create: (context) => CartNotifier()),
+    ChangeNotifierProvider(create: (context) => PaymentNotifier()),
   ],
   child: const IhunShop(),
 );

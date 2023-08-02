@@ -47,22 +47,21 @@ class CartHelper {
       "Content-Type": "application/json",
       "token": "Bearer $tokenUser"
     };
-    try {
-      final response = await dio.get(
-        AppUrls.baseUrl + AppUrls.getCart,
-        options: Options(headers: headers),
-      );
-      if (response.statusCode == 200) {
-        var data = response.data;
-        List<Product> cart = [];
-        var products = data[0]['products'];
-        cart = List<Product>.from(products.map((x) => Product.fromJson(x)));
-        return cart;
+    final response = await dio.get(
+      AppUrls.baseUrl + AppUrls.getCart,
+      options: Options(headers: headers),
+    );
+    if (response.statusCode == 200) {
+      var data = response.data;
+      List<Product> cart = [];
+      var products = data[0]['products'];
+      if (products == null) {
       } else {
-        return [];
+        cart = List<Product>.from(products.map((x) => Product.fromJson(x)));
       }
-    } catch (e) {
-      throw Exception(e);
+      return cart;
+    } else {
+      return [];
     }
   }
 

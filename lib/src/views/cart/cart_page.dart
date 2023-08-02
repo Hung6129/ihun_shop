@@ -4,11 +4,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
+import 'package:ihun_shop/src/config/constants.dart';
 import 'package:ihun_shop/src/config/flutter_toast.dart';
+import 'package:ihun_shop/src/config/global.dart';
 
 import 'package:ihun_shop/src/config/styles/text_styles.dart';
+import 'package:ihun_shop/src/controllers/payment_controller.dart';
 import 'package:ihun_shop/src/models/get_products.dart';
+import 'package:ihun_shop/src/models/orders_req.dart';
 import 'package:ihun_shop/src/services/cart_helper.dart';
+import 'package:ihun_shop/src/services/payment_helper.dart';
 import 'package:provider/provider.dart';
 
 import '../../config/widgets/checkout_btn.dart';
@@ -32,6 +37,8 @@ class _CartPageState extends State<CartPage> {
   @override
   Widget build(BuildContext context) {
     final cartNotifier = Provider.of<CartNotifier>(context);
+    final paymentNotifier = Provider.of<PaymentNotifier>(context);
+    cartNotifier.checkout;
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -70,6 +77,7 @@ class _CartPageState extends State<CartPage> {
                       onTap: () {
                         cartNotifier.productIndex = index;
                         cartNotifier.checkout.insert(0, data);
+                        print(cartNotifier.checkout.length);
                       },
                       leading: Stack(
                         children: [
@@ -170,7 +178,30 @@ class _CartPageState extends State<CartPage> {
         height: 100,
         child: cartNotifier.checkout.isNotEmpty
             ? CheckoutButton(
-                onTap: () {},
+                onTap: () {
+                  final userId = Global.storageServices
+                      .getString(AppConstant.STORAGE_USER_TOKEN_KEY);
+                  final data = cartNotifier.checkout[0].cartItem;
+                  Order order = Order(
+                    userId: userId,
+                    cartItems: [
+                      CartItem(
+                        name: data.name,
+                        id: data.id,
+                        price: data.price,
+                        cartQuantity: 1,
+                      )
+                    ],
+                  );
+                  PaymentHelper().makePayment(order).then((value) {
+                    // if (value.isNotEmpty) {
+                      paymentNotifier.setPaymentUrl = value;
+                      toastInfor(text: "Done: ${paymentNotifier.paymentUrl}");
+                    // } else {
+                    //   toastInfor(text: "Something went wrong");
+                    // }
+                  });
+                },
                 label: "Proceed to Checkout",
                 color: Colors.black,
               )

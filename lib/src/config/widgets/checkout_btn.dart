@@ -29,7 +29,7 @@ class CheckoutButton extends StatelessWidget {
           child: Center(
             child: Text(
               label,
-              style: TextStyles.customStyle.bold.whiteText,
+              style: TextStyles.customStyle.bold.whiteText.setTextSize(20.sp),
             ),
           ),
         ),
