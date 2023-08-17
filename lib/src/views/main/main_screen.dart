@@ -15,7 +15,10 @@ class MainScreen extends StatelessWidget {
         return Scaffold(
           backgroundColor: const Color(0xFFE2E2E2),
           body: pageList[mainScreenNotifier.pageIndex],
-          bottomNavigationBar: BottomNavigationBar(
+          bottomNavigationBar:
+
+              //Todo: Make a floating bottom navigation bar
+              BottomNavigationBar(
             selectedItemColor: Colors.black,
             backgroundColor: Colors.white,
             unselectedItemColor: Colors.black.withOpacity(0.5),

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ihun_shop/src/models/get_products.dart';
 
-
 class CartNotifier extends ChangeNotifier {
   List<Product> _checkout = [];
 
@@ -17,8 +16,6 @@ class CartNotifier extends ChangeNotifier {
     _productIndex = productIndex;
     notifyListeners();
   }
-
-  
 
   // Future<bool> addToCart(String cartItem, int quantity) async {
   //   final res = await CartHelper().addToCart(cartItem, quantity);
