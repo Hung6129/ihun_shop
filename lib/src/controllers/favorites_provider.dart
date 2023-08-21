@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 
+/// This class is a ChangeNotifier class that notifies its listeners when
+/// the value of any of its properties changes.
+/// FavoritesNotifier class is used to manage the favorites state of the app.
+/// It notifies its listeners when the user adds or removes a product from favorites.
+
 class FavoritesNotifier extends ChangeNotifier {
   final _favBox = Hive.box('fav_box');
   List<dynamic> _ids = [];

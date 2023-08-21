@@ -5,7 +5,9 @@ import 'package:ihun_shop/src/models/sneaker_model.dart';
 // this class fetches data from the json file and return it to the app
 class ProductHelper {
   Dio dio = Dio();
-  // Male
+
+  /// This method fetches data from api and returns a list of sneakers
+  /// for male category
   Future<List<Sneakers>> getMaleSneakers() async {
     final response = await dio.get(AppUrls.baseUrl + AppUrls.products);
     if (response.statusCode == 200) {
@@ -20,7 +22,8 @@ class ProductHelper {
     }
   }
 
-// Female
+  /// This method fetches data from api and returns a list of sneakers
+  /// for female category
   Future<List<Sneakers>> getFemaleSneakers() async {
     final response = await dio.get(AppUrls.baseUrl + AppUrls.products);
     if (response.statusCode == 200) {
@@ -35,7 +38,8 @@ class ProductHelper {
     }
   }
 
-// Kids
+  /// This method fetches data from api and returns a list of sneakers
+  /// for kid category
   Future<List<Sneakers>> getKidsSneakers() async {
     final response = await dio.get(AppUrls.baseUrl + AppUrls.products);
     if (response.statusCode == 200) {
@@ -50,7 +54,8 @@ class ProductHelper {
     }
   }
 
-// Searching
+  /// This method fetches data from api using the search query
+  /// and returns a list of sneakers
   Future<List<Sneakers>> searchingProducts(String query) async {
     final response = await dio.get(AppUrls.baseUrl + AppUrls.searching + query);
     if (response.statusCode == 200) {

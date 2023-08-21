@@ -2,6 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:ihun_shop/src/config/global.dart';
 import 'package:ihun_shop/src/services/authen_helper.dart';
 
+/// This class is a ChangeNotifier class that notifies its listeners when
+/// the value of any of its properties changes.
+/// AuthNotifier class is used to manage the authentication state of the app.
+/// It notifies its listeners when the user logs in or logs out.
+
 class AuthNotifier extends ChangeNotifier {
   bool isProcessing = false;
   bool get getIsProcessing => isProcessing;
