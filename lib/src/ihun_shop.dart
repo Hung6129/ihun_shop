@@ -18,7 +18,6 @@ class IhunShop extends StatelessWidget {
   Widget build(BuildContext context) {
     // overall theme and app layout
     return ScreenUtilInit(
-      minTextAdapt: true,
       splitScreenMode: true,
       builder: (context, child) {
         return MaterialApp(
